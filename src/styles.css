@@ -1,1 +1,102 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles and fonts used throughout the app */
+:root {
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Poppins", sans-serif;
+}
+
+/* Main website colors – changing these will update the entire theme */
+:root { 
+  --background-color: #ffffff; /* General background color for the site */
+  --default-color: #444444; /* Base text color */
+  --heading-color: #555555; /* Used for titles and subtitles */
+  --accent-color: #3fbbc0; /* Highlight color for buttons, links, etc. */
+  --surface-color: #ffffff; /* Background for boxes like cards or containers */
+  --contrast-color: #ffffff; /* Text color used on dark or accent backgrounds */
+}
+
+/* Navigation menu colors – separate from global colors for more flexibility */
+:root {
+  --nav-color: #444444;  /* Default color for main nav links */
+  --nav-hover-color: #3fbbc0; /* Color for nav links on hover or when active */
+  --nav-mobile-background-color: #ffffff; /* Background for mobile nav menu */
+  --nav-dropdown-background-color: #ffffff; /* Background for dropdown menus */
+  --nav-dropdown-color: #444444; /* Text color for dropdown nav items */
+  --nav-dropdown-hover-color: #3fbbc0; /* Hover color for dropdown nav items */
+}
+
+/* Preset color classes – apply these to override default color schemes in specific sections */
+.light-background {
+  --background-color: #f7fcfc;
+  --surface-color: #ffffff;
+}
+
+.dark-background {
+  --background-color: #060606;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #252525;
+  --contrast-color: #ffffff;
+}
+
+.accent-background {
+  --background-color: #3fbbc0;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #65c9cd;
+}
+
+/* Header styles */
+.header {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  transition: all 0.5s;
+  z-index: 997;
+  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+}
+
+.header .topbar {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  height: 40px;
+  padding: 0;
+  transition: all 0.5s;
+}
+
+.header .branding {
+  min-height: 60px;
+  padding: 10px 0;
+}
+
+.header .logo {
+  line-height: 1;
+}
+
+.header .logo img {
+  max-height: 36px;
+  margin-right: 8px;
+}
+
+.header .logo h1 {
+  font-size: 30px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+.header .cta-btn,
+.header .cta-btn:focus {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-size: 14px;
+  padding: 8px 20px;
+  margin: 0 5px 0 30px;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.header .cta-btn:hover,
+.header .cta-btn:focus:hover {
+  color: var(--contrast-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
