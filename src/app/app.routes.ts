@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent } from './pages/main/home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
-import { AppointmentsComponent } from './pages/appointments/appointments.component';
-import { PatientsComponent } from './pages/patients/patients.component';
-import { AboutComponent } from './pages/about/about.component';
+import { AppointmentsComponent } from './pages/dashboard/appointments/appointments.component';
+import { PatientsComponent } from './pages/dashboard/patients/patients.component';
+import { AboutComponent } from './pages/main/about/about.component';
 import { AuthComponent } from './layouts/auth/auth.component';
 import { GuestGuard } from './guards/guest.guard';
 import { LoginComponent } from './pages/auth/login/login.component';

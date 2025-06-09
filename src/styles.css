@@ -1,1 +1,202 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles and fonts used throughout the app */
+:root {
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Poppins", sans-serif;
+}
+
+/* Main website colors – changing these will update the entire theme */
+:root { 
+  --background-color: #ffffff; /* General background color for the site */
+  --default-color: #444444; /* Base text color */
+  --heading-color: #555555; /* Used for titles and subtitles */
+  --accent-color: #3fbbc0; /* Highlight color for buttons, links, etc. */
+  --surface-color: #ffffff; /* Background for boxes like cards or containers */
+  --contrast-color: #ffffff; /* Text color used on dark or accent backgrounds */
+}
+
+/* Navigation menu colors – separate from global colors for more flexibility */
+:root {
+  --nav-color: #444444;  /* Default color for main nav links */
+  --nav-hover-color: #3fbbc0; /* Color for nav links on hover or when active */
+}
+
+/* Preset color classes – apply these to override default color schemes in specific sections */
+.light-background {
+  --background-color: #f7fcfc;
+  --surface-color: #ffffff;
+}
+
+.dark-background {
+  --background-color: #060606;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #252525;
+  --contrast-color: #ffffff;
+}
+
+.accent-background {
+  --background-color: #3fbbc0;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #65c9cd;
+}
+
+/* Header styles */
+.header {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  transition: all 0.5s;
+  z-index: 997;
+  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+}
+
+.header .topbar {
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
+  height: 40px;
+  padding: 0;
+  transition: all 0.5s;
+}
+
+.header .branding {
+  min-height: 60px;
+  padding: 10px 0;
+}
+
+.header .logo {
+  line-height: 1;
+}
+
+.header .logo img {
+  max-height: 80px;
+}
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+body {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  font-family: var(--default-font);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: color-mix(in srgb, var(--accent-color), transparent 25%);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/* Navmenu - Desktop */
+@media (min-width: 1200px) {
+  .navmenu {
+    padding: 0;
+  }
+
+  .navmenu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  .navmenu li {
+    position: relative;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-color);
+    padding: 18px 15px;
+    font-size: 13px;
+    font-family: var(--nav-font);
+    font-weight: 500;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu li:last-child a {
+    padding-right: 0;
+  }
+
+  .navmenu li:hover>a{
+    color: var(--nav-hover-color);
+  }
+
+/* Navmenu - Mobile */
+@media (max-width: 1199px) {
+  .mobile-nav-toggle {
+    color: var(--nav-color);
+    font-size: 28px;
+    line-height: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .navmenu {
+    padding: 0;
+    z-index: 9997;
+  }
+
+  .navmenu ul {
+    display: none;
+    list-style: none;
+    position: absolute;
+    inset: 60px 20px 20px 20px;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 6px;
+    background-color: var(--nav-mobile-background-color);
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 9998;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-dropdown-color);
+    padding: 10px 20px;
+    font-family: var(--nav-font);
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+  .navmenu a:focus {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+  }
+
+  .navmenu a:hover{
+    color: var(--nav-dropdown-hover-color);
+  }
+}
+}
