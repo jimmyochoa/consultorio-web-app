@@ -10,9 +10,4 @@ import { SidebarMenuComponent } from '../sidebar-menu/sidebar-menu.component';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  isCollapsed = false;
-
-  toggleSidebar() {
-    this.isCollapsed = !this.isCollapsed;
-  }
 }

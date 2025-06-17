@@ -10,4 +10,3 @@ import { SidebarMenuItemComponent } from '../sidebar-menu-item/sidebar-menu-item
 export class SidebarMenuComponent {
 
 }
-
