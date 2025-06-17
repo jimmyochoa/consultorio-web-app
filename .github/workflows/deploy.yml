@@ -1,0 +1,38 @@
+name: Build & Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./app
+
+      - name: Build
+        run: npm run build
+        working-directory: ./app
+
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run ng -- deploy \
+            --repo="https://github.com/jimmyochoa/consultorio-web-app.git" \
+            --base-href=/consultorio-web-app/ \
+            --name="jimmyochoa" \
+            --email="jimmyochoaholguin@gmail.com"
+        working-directory: ./app
