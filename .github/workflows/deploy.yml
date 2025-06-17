@@ -21,7 +21,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build -- --base-href=/consultorio-web-app/
+        run: npm run build -- --configuration production --base-href=/consultorio-web-app/
 
       - name: Deploy to GitHub Pages
         env:
