@@ -1,1 +1,17 @@
-<p>patients works!</p>
+<div class="container py-4">
+  <h2>Dashboard</h2>
+
+  <button class="btn btn-success me-2" (click)="showPatientModal = true">
+    Agregar Paciente
+  </button>
+
+  <app-modal
+    *ngIf="showPatientModal"
+    title="Nuevo Paciente"
+    (close)="showPatientModal = false"
+  >
+    <app-patient-form
+      (submitForm)="handleNewPatient($event)"
+    ></app-patient-form>
+  </app-modal>
+</div>
