@@ -3,7 +3,6 @@ name: Build & Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
-
   workflow_dispatch:
 
 jobs:
@@ -16,23 +15,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./app
 
       - name: Build
-        run: npm run build
-        working-directory: ./app
+        run: npm run build -- --base-href=/consultorio-web-app/
 
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run ng -- deploy \
-            --repo="https://github.com/jimmyochoa/consultorio-web-app.git" \
-            --base-href=/consultorio-web-app/ \
-            --name="jimmyochoa" \
-            --email="jimmyochoaholguin@gmail.com"
-        working-directory: ./app
+          npx angular-cli-ghpages --dir=dist/consultorio-web-app --repo=https://github.com/jimmyochoa/consultorio-web-app.git --name="jimmyochoa" --email="jimmyochoaholguin@gmail.com"
