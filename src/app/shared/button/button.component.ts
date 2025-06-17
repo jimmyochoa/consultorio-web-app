@@ -10,5 +10,5 @@ import { RouterModule } from '@angular/router';
 export class ButtonComponent {
   @Input() route: string = '';
   @Input() label: string = '';
-
+  @Input() type?: 'button' | 'submit' | 'reset';
 }
