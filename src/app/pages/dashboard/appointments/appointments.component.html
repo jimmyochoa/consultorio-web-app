@@ -1,2 +1,19 @@
-<p>appointments works!</p>
+<div class="container py-4">
+  <h2>Dashboard</h2>
 
+  <button class="btn btn-primary" (click)="showAppointmentModal = true">
+    Agregar Cita
+  </button>
+
+  <app-modal
+    *ngIf="showAppointmentModal"
+    title="Nueva Cita"
+    (close)="showAppointmentModal = false"
+  >
+    <app-appointment-form
+      [patients]="patients"
+      (submitForm)="handleNewAppointment($event)"
+    >
+    </app-appointment-form>
+  </app-modal>
+</div>

@@ -1,25 +1,23 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-form-field',
-  imports: [],
+  selector: 'app-dropdown',
+  imports: [CommonModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormFieldComponent),
+      useExisting: forwardRef(() => DropdownComponent),
       multi: true
     }
   ],
-  templateUrl: './form-field.component.html',
-  styleUrl: './form-field.component.css'
+  templateUrl: './dropdown.component.html',
+  styleUrl: './dropdown.component.css'
 })
-export class FormFieldComponent implements ControlValueAccessor {
+export class DropdownComponent implements ControlValueAccessor {
   @Input() label: string = '';
-  @Input() type: string = 'text';
-  @Input() placeholder: string = '';
-  @Input() required: boolean = false;
+  @Input() options: { label: string, value: any }[] = [];
 
   value: any;
   onChange: (value: any) => void = () => {};
@@ -37,8 +35,9 @@ export class FormFieldComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  handleInput(event: any) {
+  handleChange(event: any) {
     this.value = event.target.value;
     this.onChange(this.value);
   }
+
 }
