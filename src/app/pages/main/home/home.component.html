@@ -1,1 +1,110 @@
-<p>home works!</p>
+<!-- Hero Section -->
+<section id="hero" class="hero p-0">
+  <div
+    id="hero-carousel"
+    class="carousel slide carousel-fade"
+    data-bs-ride="carousel"
+    data-bs-interval="5000"
+  >
+    <div class="carousel-inner">
+      <!-- Slide 1 -->
+      <app-carousel-slide
+        imgSrc="assets/img/hero-carousel/hero-carousel-1.jpg"
+        title="Comprometidos con la excelencia quirúrgica"
+        description="Nuestro equipo médico utiliza tecnología avanzada para garantizar procedimientos seguros y efectivos en cada intervención."
+        [active]="true"
+      ></app-carousel-slide>
+
+      <!-- Slide 2 -->
+      <app-carousel-slide
+        imgSrc="assets/img/hero-carousel/hero-carousel-2.jpg"
+        title="Equipamiento moderno para tu bienestar"
+        description="Contamos con instalaciones de última generación diseñadas para ofrecerte un diagnóstico preciso y un tratamiento óptimo."
+      ></app-carousel-slide>
+
+      <!-- Slide 3 -->
+      <app-carousel-slide
+        imgSrc="assets/img/hero-carousel/hero-carousel-3.jpg"
+        title="Experiencia y dedicación en cada cuidado"
+        description="Profesionales altamente capacitados trabajando en equipo para brindarte atención personalizada y resultados confiables."
+      ></app-carousel-slide>
+    </div>
+
+    <!-- Controles -->
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#hero-carousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#hero-carousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+
+    <!-- Indicadores -->
+    <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#hero-carousel"
+        data-bs-slide-to="0"
+        class="active"
+        aria-current="true"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#hero-carousel"
+        data-bs-slide-to="1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#hero-carousel"
+        data-bs-slide-to="2"
+      ></button>
+    </div>
+  </div>
+</section>
+<!-- /Hero Section -->
+
+<!-- Featured Services Section -->
+<section id="featured-services" class="featured-services section py-5">
+  <div class="container">
+    <div class="row gy-4 justify-content-center">
+      <div class="col-xl-3 col-md-6 d-flex">
+        <app-featured-item
+          iconClass="fas fa-pills"
+          title="Farmacia y Medicamentos"
+          description="Suministro seguro y confiable de medicamentos, con asesoría
+            personalizada para tu tratamiento."
+        >
+        </app-featured-item>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex">
+        <app-featured-item
+          iconClass="fas fa-thermometer"
+          title="Vacunación y Procedimientos"
+          description="Servicios de vacunación y procedimientos médicos realizados con
+            altos estándares de seguridad y calidad."
+        ></app-featured-item>
+      </div>
+
+      <div class="col-xl-3 col-md-6 d-flex">
+        <app-featured-item
+          iconClass="fas fa-dna"
+          title="Genética y Diagnóstico"
+          description="Estudios genéticos avanzados para un diagnóstico preciso y
+            tratamientos personalizados que marcan la diferencia."
+        ></app-featured-item>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- /Featured Services Section -->

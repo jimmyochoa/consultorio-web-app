@@ -1,16 +1,20 @@
 .cta-btn {
   color: var(--contrast-color);
+  background-color: var(--accent-color);
   border: none;
-  background: var(--accent-color);
-  font-size: 14px;
-  padding: 8px 20px;
-  margin: 0 5px 0 30px;
-  border-radius: 15px;
-  transition: 0.3s;
+  font-size: 16px;
+  padding: 10px 24px;
+  margin: 0 5px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
 }
 
-.cta-btn:hover{
+.cta-btn:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 15%); /* fallback si no hay color-mix */
+  filter: brightness(1.05);
+  transform: translateY(-1px);
   color: var(--contrast-color);
-  outline: none;
-  background: color-mix(in srgb, var(--accent-color), transparent 15%);
 }

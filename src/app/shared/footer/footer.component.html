@@ -1,33 +1,49 @@
 <footer id="footer" class="footer light-background">
   <div class="container footer-top">
     <div class="row gy-4">
-      <div class="col-lg-4 col-md-6 footer-about">
-        <a href="#home" class="logo d-flex align-items-center">
-          <span class="sitename">Mi Clinica Web</span>
+      <!-- Columna 1: Sitename -->
+      <div class="col-lg-3 col-md-6 footer-about">
+        <a href="#" class="logo d-flex align-items-center">
+          <span class="sitename">Mi Clínica Web</span>
         </a>
-        <div class="footer-contact pt-3">
-          <p>1/2 Av. Samborondón</p>
-          <p>Guayas, Guayaquil EC092301</p>
-          <p class="mt-3">
-            <strong>Phone:</strong> <span>+593 99 354 1016</span>
-          </p>
-          <p>
-            <strong>Email:</strong> <span> miclinicaweb&#64;example.com</span>
-          </p>
-        </div>
-        <div class="social-links d-flex mt-4">
-          <a href=""><i class="bi bi-twitter-x"></i></a>
-          <a href=""><i class="bi bi-facebook"></i></a>
-          <a href=""><i class="bi bi-instagram"></i></a>
-        </div>
+        <p>Tu salud, nuestra prioridad.</p>
       </div>
 
-      <div class="col-lg-2 col-md-3 footer-links">
-        <h4>Useful Links</h4>
+      <!-- Columna 2: Links -->
+      <div class="col-lg-3 col-md-6 footer-links">
+        <h4>Enlaces</h4>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">About us</a></li>
+          <li>
+            <a
+              routerLink="/"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >INICIO</a
+            >
+          </li>
+          <li>
+            <a routerLink="/about" routerLinkActive="active">SOBRE NOSOTROS</a>
+          </li>
         </ul>
+      </div>
+
+      <!-- Columna 3: Contáctanos -->
+      <div class="col-lg-3 col-md-6 footer-contact">
+        <h4>Contáctanos</h4>
+        <p>1/2 Av. Samborondón</p>
+        <p>Guayas, Guayaquil EC092301</p>
+        <p><strong>Phone:</strong> <span>+593 99 354 1016</span></p>
+        <p><strong>Email:</strong> <span>miclinicaweb&#64;example.com</span></p>
+      </div>
+
+      <!-- Columna 4: Redes Sociales -->
+      <div class="col-lg-3 col-md-6 footer-social">
+        <h4>Redes</h4>
+        <div class="social-links d-flex mt-2">
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -36,14 +52,10 @@
     <p>
       © <span>Copyright</span>
       <strong class="px-1 sitename">Mi Clinica Web</strong>
-      <span>All Rights Reserved</span>
+      <span>Todos los Derechos Reservados</span>
     </p>
     <div class="credits">
-      <!-- All the links in the footer should remain intact. -->
-      <!-- You can delete the links only if you've purchased the pro version. -->
-      <!-- Licensing information: https://bootstrapmade.com/license/ -->
-      <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-      Designed by Jimmy Ochoa, Ashley Vega, Leynder Sánchez
+      Desarrollado por Jimmy Ochoa, Ashley Vega, Leynder Sánchez
     </div>
   </div>
 </footer>
