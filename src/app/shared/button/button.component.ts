@@ -8,7 +8,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './button.component.css'
 })
 export class ButtonComponent {
-  @Input() route: string = '';
   @Input() label: string = '';
-  @Input() type?: 'button' | 'submit' | 'reset';
 }
