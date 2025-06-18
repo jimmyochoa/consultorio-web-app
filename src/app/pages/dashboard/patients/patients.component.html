@@ -9,10 +9,11 @@
 
   <app-modal
     *ngIf="showPatientModal"
-    title="Nuevo Paciente"
-    (close)="showPatientModal = false"
+    [title]="editingPatient ? 'Editar Paciente' : 'Nuevo Paciente'"
+    (close)="handleCloseModal()"
   >
     <app-patient-form
+      [initialData]="editingPatient"
       (submitForm)="handleNewPatient($event)"
     ></app-patient-form>
   </app-modal>

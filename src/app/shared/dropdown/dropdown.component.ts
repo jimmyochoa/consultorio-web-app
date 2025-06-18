@@ -36,9 +36,8 @@ export class DropdownComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  handleChange(event: any) {
-    this.value = event.target.value;
+  handleChange(value: any) {
+    this.value = value;
     this.onChange(this.value);
   }
-
 }
