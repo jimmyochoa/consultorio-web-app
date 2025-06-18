@@ -3,18 +3,19 @@
     <h2>Dashboard de Citas</h2>
     <app-button
       label="Agregar Cita"
-      (click)="showAppointmentModal = true"
+      (click)="openNewAppointmentModal()"
     ></app-button>
   </div>
 
   <app-modal
     *ngIf="showAppointmentModal"
-    title="Nueva Cita"
+    [title]="selectedAppointment ? 'Editar Cita' : 'Nueva Cita'"
     (close)="showAppointmentModal = false"
   >
     <app-appointment-form
       [patients]="patients"
-      (submitForm)="handleNewAppointment($event)"
+      [initialData]="selectedAppointment"
+      (submitForm)="handleSaveAppointment($event)"
     ></app-appointment-form>
   </app-modal>
 
