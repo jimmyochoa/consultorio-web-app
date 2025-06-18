@@ -3,7 +3,7 @@ export interface Patient {
   nombres: string;
   apellidos: string;
   fechaNacimiento: string; 
-  sexo: 'Masculino' | 'Femenino' | 'Otro';
+  sexo: 'Masculino' | 'Femenino' ;
   email: string;
   celular: string;
   tipoSangre: string; 

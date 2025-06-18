@@ -22,6 +22,8 @@ export class AppointmentsComponent implements OnInit {
   patients: Patient[] = [];
   appointments: Appointment[] = [];
 
+  selectedAppointment: Appointment | null = null;
+
   constructor(
     private appointmentService: AppointmentsService,
     private patientService: PatientService
@@ -37,17 +39,64 @@ export class AppointmentsComponent implements OnInit {
     });
   }
 
-  handleNewAppointment(data: Appointment) {
+  openNewAppointmentModal() {
+    this.selectedAppointment = null;
+    this.showAppointmentModal = true;
+  }
+
+  handleSaveAppointment(data: Appointment) {
+  const pacienteIdNum = typeof data.pacienteId === 'string' ? parseInt(data.pacienteId, 10) : data.pacienteId;
+
+  // Validar conflicto de cita
+  const conflict = this.appointments.some(app =>
+    app.fechaHora === data.fechaHora &&
+    app.id !== data.id
+  );
+
+  if (conflict) {
+    alert('Ya existe una cita en esa fecha y hora. Por favor seleccione otro horario.');
+    return;
+  }
+
+  // Buscar paciente actualizado
+  const paciente = this.patients.find(p => p.id === pacienteIdNum);
+
+  if (!paciente) {
+    alert('Paciente no encontrado. Por favor seleccione un paciente válido.');
+    return;
+  }
+
+  data.pacienteId = pacienteIdNum;
+  data.pacienteNombre = `${paciente.nombres} ${paciente.apellidos}`;
+
+  if (data.id) {
+    // Editar cita
+    const index = this.appointments.findIndex(a => a.id === data.id);
+    if (index !== -1) {
+      this.appointments[index] = data;
+    }
+  } else {
+    // Nueva cita
+    const maxId = this.appointments.length > 0 ? Math.max(...this.appointments.map(a => a.id)) : 0;
+    data.id = maxId + 1;
     this.appointments.push(data);
-    this.showAppointmentModal = false;
   }
 
-  onEdit(app: Appointment) {
-    console.log('Editar cita', app);
+  this.showAppointmentModal = false;
+  this.selectedAppointment = null;
   }
 
-  onDelete(app: Appointment) {
-    this.appointments = this.appointments.filter(a => a.id !== app.id);
+
+
+  onEdit(appointment: Appointment) {
+    this.selectedAppointment = { ...appointment };
+    this.showAppointmentModal = true;
+  }
+
+  onDelete(appointment: Appointment) {
+    if (confirm(`¿Seguro que deseas eliminar la cita de ${appointment.pacienteNombre} el ${appointment.fechaHora}?`)) {
+      this.appointments = this.appointments.filter(a => a.id !== appointment.id);
+    }
   }
 
   columns = [

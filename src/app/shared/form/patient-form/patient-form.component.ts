@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output,OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { FormFieldComponent } from "../form-field/form-field.component";
 import { DropdownComponent } from "../../dropdown/dropdown.component";
+import { Patient } from "../../../interfaces/patient"; // Asegúrate de que la ruta sea correcta
 
 @Component({
   selector: 'app-patient-form',
@@ -9,8 +10,9 @@ import { DropdownComponent } from "../../dropdown/dropdown.component";
   templateUrl: './patient-form.component.html',
   styleUrl: './patient-form.component.css'
 })
-export class PatientFormComponent {
- @Output() submitForm = new EventEmitter<any>();
+export class PatientFormComponent implements OnChanges {
+ @Output() submitForm = new EventEmitter<Patient>();
+ @Input() initialData: Patient | null = null;
 
   form: FormGroup;
   bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -31,13 +33,28 @@ export class PatientFormComponent {
       email: ['', [Validators.required, Validators.email]],
       celular: ['', Validators.required],
       tipoSangre: ['', Validators.required],
-      fechaRegistro: ['', Validators.required]
     });
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.submitForm.emit(this.form.value);
+      if (this.form.valid) {
+      const formValue = this.form.value;
+
+      // Si estamos creando un nuevo paciente, agregar la fecha actual
+      if (!this.initialData) {
+        formValue.fechaRegistro = new Date().toISOString().split('T')[0]; // formato YYYY-MM-DD
+      }
+
+      this.submitForm.emit(formValue);
+      this.form.reset(); 
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.initialData) {
+      this.form.patchValue(this.initialData);
+    } else {
+      this.form.reset();
     }
   }
 }
