@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-table',
   imports: [CommonModule],
-  templateUrl: './table.component.html'
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
 })
 export class TableComponent<T> {
   @Input() data: T[] = [];
