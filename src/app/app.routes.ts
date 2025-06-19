@@ -29,7 +29,7 @@ export const routes: Routes = [
     component: AuthComponent,
     //canActivate: [GuestGuard],
     children: [
-      { path: 'login', component: LoginComponent , canActivate: [GuestGuard]},
+      { path: 'login', component: LoginComponent},
       { path: 'register', component: RegisterComponent },
       { path: 'logout', component: LogoutComponent },
       { path: '**', redirectTo: 'login' },
