@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output,OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { FormFieldComponent } from "../form-field/form-field.component";
 import { DropdownComponent } from "../../dropdown/dropdown.component";
 import { Patient } from "../../../interfaces/patient"; // Asegúrate de que la ruta sea correcta
@@ -26,15 +26,31 @@ export class PatientFormComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
-      sexo: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      celular: ['', Validators.required],
-      tipoSangre: ['', Validators.required],
-    });
+    nombres: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+    apellidos: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+    fechaNacimiento: ['', [Validators.required, this.noFutureDateValidator]],
+    sexo: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    celular: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(/^09\d{8}$/) // 10 dígitos, empieza con 09
+      ]
+    ],
+    tipoSangre: ['', Validators.required],
+  });
+
   }
+
+  noFutureDateValidator(control: FormControl) {
+  const inputDate = new Date(control.value);
+  const today = new Date();
+  if (inputDate > today) {
+    return { futureDate: true };
+  }
+  return null;
+}
 
   onSubmit() {
       if (this.form.valid) {
@@ -47,6 +63,8 @@ export class PatientFormComponent implements OnChanges {
 
       this.submitForm.emit(formValue);
       this.form.reset(); 
+    }else {
+      this.form.markAllAsTouched(); 
     }
   }
 

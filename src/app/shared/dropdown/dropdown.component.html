@@ -11,4 +11,8 @@
       {{ option.label }}
     </option>
   </select>
+
+  <div *ngIf="showError" class="text-danger small mt-1">
+    {{ errorMessage }}
+  </div>
 </div>

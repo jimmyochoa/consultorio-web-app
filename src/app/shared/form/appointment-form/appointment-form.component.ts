@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors} from '@angular/forms';
 import { FormFieldComponent } from "../form-field/form-field.component";
 import { DropdownComponent } from "../../dropdown/dropdown.component";
 import { Appointment } from '../../../interfaces/appointment';
@@ -21,7 +21,7 @@ export class AppointmentFormComponent implements OnChanges {
     this.form = this.fb.group({
       id: [null],
       pacienteId: ['', Validators.required],
-      fechaHora: ['', Validators.required],
+      fechaHora: ['', [Validators.required, this.noPastDateValidator]],
       razon: ['', Validators.required]
     });
   }
@@ -40,6 +40,8 @@ export class AppointmentFormComponent implements OnChanges {
     if (this.form.valid) {
       this.submitForm.emit(this.form.value);
       this.form.reset();
+    }else {
+      this.form.markAllAsTouched(); 
     }
   }
 
@@ -48,5 +50,17 @@ export class AppointmentFormComponent implements OnChanges {
       label: p.nombres + ' ' + p.apellidos,
       value: p.id
     }));
+  }
+
+  noPastDateValidator(control: AbstractControl): ValidationErrors | null {
+    const inputDate = new Date(control.value);
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    if (inputDate < todayStart) {
+      return { pastDate: true };
+    }
+
+    return null;
   }
 }
