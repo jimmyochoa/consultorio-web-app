@@ -10,6 +10,7 @@ import { GuestGuard } from './guards/guest.guard';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { MainComponent } from './layouts/main/main.component';
+import { LogoutComponent } from './pages/auth/logout/logout.component';
 
 export const routes: Routes = [
   // Public routes inside Main layout
@@ -26,10 +27,11 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    canActivate: [GuestGuard],
+    //canActivate: [GuestGuard],
     children: [
-      { path: 'login', component: LoginComponent },
+      { path: 'login', component: LoginComponent , canActivate: [GuestGuard]},
       { path: 'register', component: RegisterComponent },
+      { path: 'logout', component: LogoutComponent },
       { path: '**', redirectTo: 'login' },
     ]
   },
