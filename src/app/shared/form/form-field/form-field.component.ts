@@ -68,6 +68,7 @@ export class FormFieldComponent implements ControlValueAccessor {
     if (control.errors['email']) return 'Correo electrónico inválido';
     if (control.errors['pattern']) return 'Formato inválido';
     if (control.errors['futureDate']) return 'La fecha no puede ser futura';
+    if (control.errors['pastDate']) return 'No se permiten fechas anteriores a hoy';
     return 'Campo inválido';
   }
 }
