@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-dropdown
+    formControlName="pacienteId"
+    [formControlName]="'pacienteId'"
+    label="Paciente"
+    [options]="patientOptions"
+  ></app-dropdown>
+
+  <app-form-field
+    formControlName="fechaHora"
+    [formControlName]="'fechaHora'"
+    type="datetime-local"
+    label="Fecha y hora"
+  ></app-form-field>
+
+  <app-form-field
+    formControlName="razon"
+    [formControlName]="'razon'"
+    label="Razón de cita"
+  ></app-form-field>
+
+  <div class="d-grid">
+    <button class="btn btn-primary mt-3" type="submit">Guardar Cita</button>
+  </div>
+</form>

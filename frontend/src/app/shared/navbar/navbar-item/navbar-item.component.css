@@ -1,0 +1,29 @@
+@media (min-width: 1200px) {
+   li {
+    position: relative;
+  }
+
+   a,
+   a:focus {
+    color: var(--nav-color);
+    padding: 18px 15px;
+    font-size: 13px;
+    font-family: var(--nav-font);
+    font-weight: 500;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+   li:last-child a {
+    padding-right: 0;
+  }
+
+   li:hover>a{
+    color: var(--nav-hover-color);
+  }
+
+}
