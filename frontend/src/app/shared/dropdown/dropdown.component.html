@@ -1,0 +1,18 @@
+<div class="mb-3">
+  <label class="form-label">{{ label }}</label>
+  <select
+    class="form-select"
+    [ngModel]="value"
+    (ngModelChange)="handleChange($event)"
+    (blur)="onTouched()"
+  >
+    <option value="" disabled>Seleccione una opción</option>
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+
+  <div *ngIf="showError" class="text-danger small mt-1">
+    {{ errorMessage }}
+  </div>
+</div>
