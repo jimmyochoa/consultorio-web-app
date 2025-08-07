@@ -1,5 +1,52 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,macos,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,node,macos,windows
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,macos,node,angular,git
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,macos,node,angular,git
+
+### Angular ###
+## Angular ##
+# compiled output
+dist/
+tmp/
+app/**/*.js
+app/**/*.js.map
+
+# dependencies
+node_modules/
+bower_components/
+
+# IDEs and editors
+.idea/
+
+# misc
+.sass-cache/
+connect.lock/
+coverage/
+libpeerconnection.log/
+npm-debug.log
+testem.log
+typings/
+.angular/
+
+# e2e
+e2e/*.js
+e2e/*.map
+
+# System Files
+.DS_Store/
+
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### macOS ###
 # General
@@ -76,7 +123,6 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -219,4 +265,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,macos,windows
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,macos,node,angular,git
