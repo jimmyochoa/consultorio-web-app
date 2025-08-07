@@ -26,20 +26,23 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
 
       - name: 📦 Install dependencies
+        working-directory: ./frontend
         run: npm ci
 
       - name: 🛠️ Build Angular App
+        working-directory: ./frontend
         run: npx ng build --configuration production --base-href "/consultorio-web-app/"
 
       - name: 🧩 Add .nojekyll file
-        run: echo "" > dist/consultorio-web-app/browser/.nojekyll
+        run: echo "" > frontend/dist/consultorio-web-app/browser/.nojekyll
 
       - name: 📤 Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist/consultorio-web-app/browser
+          path: frontend/dist/consultorio-web-app/browser
 
   deploy:
     needs: build
