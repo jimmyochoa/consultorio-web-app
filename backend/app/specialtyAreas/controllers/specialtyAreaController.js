@@ -59,7 +59,7 @@ module.exports = {
     }
   },
 
-  // Eliminar una
+  // Eliminar una especialidad
   async delete(req, res) {
     try {
       const { id } = req.params;
