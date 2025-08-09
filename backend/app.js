@@ -7,6 +7,9 @@ var logger = require("morgan");
 var specialtyAreaRoutes = require("./app/specialtyAreas/routes/specialtyAreaRoutes");
 var doctorRoutes = require("./app/doctors/routes/doctorRoutes");
 var authRoutes = require("./app/auth/routes/authRoutes");
+var patientRoutes = require("./app/patients/routes/patientRoutes");
+var appointmentRoutes = require("./app/appointments/routes/appointmentRoutes");
+var prescriptionRoutes = require("./app/prescriptions/routes/prescriptionRoutes");
 
 var app = express();
 
@@ -23,6 +26,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/specialty-areas", specialtyAreaRoutes);
 app.use("/doctors", doctorRoutes);
 app.use("/", authRoutes);
+app.use("/patients", patientRoutes);
+app.use("/appointments", appointmentRoutes);
+app.use("/prescriptions", prescriptionRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

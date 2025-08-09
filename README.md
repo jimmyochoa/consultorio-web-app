@@ -61,6 +61,8 @@ PHPMYADMIN_PORT=8080
 
 ```bash
 docker-compose up --build
+docker compose up --build
+
 ```
 
 ---
