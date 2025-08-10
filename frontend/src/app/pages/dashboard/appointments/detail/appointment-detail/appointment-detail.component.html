@@ -23,8 +23,7 @@
         </div>
         <div class="card-item">
           <span class="field-label">Sexo</span>
-          <span class="badge"
-                [ngClass]="{
+          <span class="badge" [ngClass]="{
                   'bg-primary text-light': appointment.patient.gender === 'MASCULINO',
                   'bg-pink text-light': appointment.patient.gender === 'FEMENINO'
                 }">
@@ -58,16 +57,43 @@
       <div class="info-grid">
         <div class="card-item">
           <span class="field-label">Fecha de inicio</span>
-          <div>{{ appointment.start_time | date:'fullDate' }} · {{ appointment.start_time | date:'shortTime' }}</div>
+          <div>{{ appointment.start_time | date:'fullDate' }} · {{ appointment.start_time | date:'hh:mm a' }}</div>
         </div>
         <div class="card-item">
           <span class="field-label">Fecha de fin</span>
-          <div>{{ appointment.end_time | date:'fullDate' }} · {{ appointment.end_time | date:'shortTime' }}</div>
+          <div>{{ appointment.end_time | date:'fullDate' }} · {{ appointment.end_time | date:'hh:mm a' }}</div>
         </div>
         <div class="card-item full-width">
           <span class="field-label">Motivo</span>
           <div>{{ appointment.reason || '—' }}</div>
         </div>
+      </div>
+    </div>
+
+    <!-- Detalles de la prescripcion -->
+    <div class="card-section mt-4" *ngIf="appointment && !loading">
+      <h4 class="section-title">Prescripción</h4>
+
+      <div *ngIf="appointment.prescription; else noPrescription">
+        <p><strong>Medicamentos:</strong> {{ appointment.prescription.medication_details }}</p>
+        <p><strong>Instrucciones:</strong> {{ appointment.prescription.instructions }}</p>
+        <p><strong>Precauciones:</strong> {{ appointment.prescription.precautions }}</p>
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-primary btn-sm" (click)="openPrescriptionForm()">Editar Prescripción</button>
+          <button class="btn btn-danger btn-sm" (click)="onDelete()">Eliminar Prescripción</button>
+        </div>
+      </div>
+
+      <ng-template #noPrescription>
+        <p>No hay prescripción registrada para esta cita.</p>
+        <button class="btn btn-success btn-sm" (click)="openPrescriptionForm()">Agregar Prescripción</button>
+      </ng-template>
+
+      <!-- Formulario para crear/editar prescripción -->
+      <div *ngIf="showPrescriptionForm" class="mt-3 p-3 border rounded">
+        <app-prescription-form [initialData]="editingPrescription" (submitForm)="savePrescription($event)"
+          (cancel)="closePrescriptionForm()">
+        </app-prescription-form>
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@
       (submitForm)="handleSaveAppointment($event)"></app-appointment-form>
   </app-modal>
 
-  <app-table [data]="appointments" [columns]="columns" (edit)="onEdit($event)" (delete)="onDelete($event)"
-    (rowClick)="onRowSelected($event)">
+  <app-table [data]="appointments" [columns]="columns" [formatters]="formatters" (edit)="onEdit($event)"
+    (delete)="onDelete($event)" (rowClick)="onRowSelected($event)">
   </app-table>
 </div>

@@ -1,4 +1,5 @@
 import { Patient } from "./patient";
+import { Prescription } from "./prescription";
 
 export interface Appointment {
   id: number;
@@ -8,4 +9,5 @@ export interface Appointment {
   end_time: string;
   reason: string;
   patient: Patient;
+  prescription?: Prescription | null;
 }

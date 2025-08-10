@@ -6,16 +6,21 @@ import { AppointmentsService } from '../../../services/dashboard/appointments.se
 import { Patient } from '../../../interfaces/patient';
 import { Appointment } from '../../../interfaces/appointment';
 import { TableComponent } from '../../../shared/table/table.component';
-import { ButtonComponent } from "../../../shared/button/button.component";
+import { ButtonComponent } from '../../../shared/button/button.component';
 import { PatientService } from '../../../services/patient/patient.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-appointments',
-  imports: [CommonModule, ModalComponent, AppointmentFormComponent, TableComponent, ButtonComponent],
+  imports: [
+    CommonModule,
+    ModalComponent,
+    AppointmentFormComponent,
+    TableComponent,
+    ButtonComponent,
+  ],
   templateUrl: './appointments.component.html',
-  styleUrl: './appointments.component.css'
+  styleUrl: './appointments.component.css',
 })
 export class AppointmentsComponent implements OnInit {
   showAppointmentModal = false;
@@ -29,21 +34,21 @@ export class AppointmentsComponent implements OnInit {
     private router: Router,
     private appointmentService: AppointmentsService,
     private patientService: PatientService
-  ) { }
+  ) {}
 
   onRowSelected(appointment: Appointment) {
     this.router.navigate(['/dashboard/appointments', appointment.id]);
   }
 
   ngOnInit(): void {
-    this.patientService.getPatients().subscribe(data => {
+    this.patientService.getPatients().subscribe((data) => {
       this.patients = data;
     });
 
-    this.appointmentService.getAppointments().subscribe(data => {
-      this.appointments = data.map(a => ({
+    this.appointmentService.getAppointments().subscribe((data) => {
+      this.appointments = data.map((a) => ({
         ...a,
-        fullName: `${a.patient.first_name} ${a.patient.last_name}`
+        fullName: `${a.patient.first_name} ${a.patient.last_name}`,
       }));
     });
   }
@@ -61,7 +66,7 @@ export class AppointmentsComponent implements OnInit {
 
     // Validar conflicto de cita
     const conflict = this.appointments.some(
-      app => app.start_time === data.start_time && app.id !== data.id
+      (app) => app.start_time === data.start_time && app.id !== data.id
     );
     if (conflict) {
       alert('Ya existe una cita en esa fecha y hora.');
@@ -69,7 +74,7 @@ export class AppointmentsComponent implements OnInit {
     }
 
     // Buscar paciente
-    const paciente = this.patients.find(p => p.id === pacienteIdNum);
+    const paciente = this.patients.find((p) => p.id === pacienteIdNum);
     if (!paciente) {
       alert('Paciente no encontrado.');
       return;
@@ -78,28 +83,30 @@ export class AppointmentsComponent implements OnInit {
     // Actualizar nombre completo
     data.patient = {
       ...paciente,
-      first_name: `${paciente.first_name} ${paciente.last_name}`
+      first_name: `${paciente.first_name} ${paciente.last_name}`,
     };
 
     if (this.selectedAppointment) {
       // ---- EDITAR ----
       const updatedAppointment = {
         ...data,
-        id: this.selectedAppointment.id // conservar ID
+        id: this.selectedAppointment.id, // conservar ID
       };
 
       this.appointmentService.updateAppointment(updatedAppointment).subscribe({
         next: (updated) => {
           // Buscar paciente para mostrar nombre completo
-          const paciente = this.patients.find(p => p.id === updated.patient_id) || updated.patient;
+          const paciente =
+            this.patients.find((p) => p.id === updated.patient_id) ||
+            updated.patient;
 
           const display = {
             ...updated,
             patient: paciente,
-            fullName: `${paciente.first_name} ${paciente.last_name}`
+            fullName: `${paciente.first_name} ${paciente.last_name}`,
           } as any;
 
-          const index = this.appointments.findIndex(a => a.id === updated.id);
+          const index = this.appointments.findIndex((a) => a.id === updated.id);
           if (index !== -1) {
             this.appointments[index] = display;
           }
@@ -107,28 +114,25 @@ export class AppointmentsComponent implements OnInit {
           this.showAppointmentModal = false;
           this.selectedAppointment = null;
         },
-        error: (err) => console.error('Error al actualizar cita:', err)
+        error: (err) => console.error('Error al actualizar cita:', err),
       });
-    }
-    else {
+    } else {
       // ---- CREAR ----
       const newAppointment = { ...data };
       this.appointmentService.createAppointment(newAppointment).subscribe({
-        next: created => {
-          const paciente = this.patients.find(p => p.id === pacienteIdNum)!;
+        next: (created) => {
+          const paciente = this.patients.find((p) => p.id === pacienteIdNum)!;
           this.appointments.push({
             ...(created as any),
-            fullName: `${paciente.first_name} ${paciente.last_name}`
+            fullName: `${paciente.first_name} ${paciente.last_name}`,
           } as any);
 
           this.showAppointmentModal = false;
         },
-        error: err => console.error('Error al crear cita:', err)
+        error: (err) => console.error('Error al crear cita:', err),
       });
-
     }
   }
-
 
   onEdit(appointment: Appointment) {
     const formatDateForInput = (isoString: string) => {
@@ -141,27 +145,54 @@ export class AppointmentsComponent implements OnInit {
     this.selectedAppointment = {
       ...appointment,
       start_time: formatDateForInput(appointment.start_time),
-      end_time: formatDateForInput(appointment.end_time)
+      end_time: formatDateForInput(appointment.end_time),
     };
 
     this.showAppointmentModal = true;
   }
 
   onDelete(appointment: Appointment) {
-    if (confirm(`¿Seguro que deseas eliminar la cita de ${appointment.patient.first_name} el ${appointment.start_time}?`)) {
+    if (
+      confirm(
+        `¿Seguro que deseas eliminar la cita de ${appointment.patient.first_name} el ${appointment.start_time}?`
+      )
+    ) {
       this.appointmentService.deleteAppointment(appointment.id).subscribe({
         next: () => {
-          this.appointments = this.appointments.filter(a => a.id !== appointment.id);
+          this.appointments = this.appointments.filter(
+            (a) => a.id !== appointment.id
+          );
         },
-        error: err => console.error('Error al eliminar cita:', err)
+        error: (err) => console.error('Error al eliminar cita:', err),
       });
     }
   }
+
+  dateFormatter = (value: any) => {
+    if (!value) return '';
+    const d = new Date(value);
+    return d
+      .toLocaleString('es-ES', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true, // AM/PM
+      })
+      .replace(',', ' ·'); // Reemplaza la coma después del año por punto centrado
+  };
 
   columns = [
     { field: 'fullName', header: 'Paciente' },
     { field: 'start_time', header: 'Fecha y hora de inicio' },
     { field: 'end_time', header: 'Fecha y hora de fin' },
-    { field: 'reason', header: 'Motivo de la cita' }
+    { field: 'reason', header: 'Motivo de la cita' },
   ];
+
+  formatters = {
+    start_time: this.dateFormatter,
+    end_time: this.dateFormatter,
+  };
 }

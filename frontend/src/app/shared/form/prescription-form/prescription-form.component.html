@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-form-field formControlName="medication_details" label="Medicamentos"></app-form-field>
+
+  <app-form-field formControlName="instructions" label="Instrucciones"></app-form-field>
+
+  <app-form-field formControlName="precautions" label="Precauciones"></app-form-field>
+
+
+  <div class="d-flex justify-content-end gap-2">
+    <app-button type="submit" label="Guardar" class="btn-success mt-3"></app-button>
+    <button type="button" class="btn-danger mt-3" (click)="onCancel()">Cancelar</button>
+  </div>
+</form>

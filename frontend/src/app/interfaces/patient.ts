@@ -7,4 +7,5 @@ export interface Patient {
   email: string;
   phone: string;
   blood_type: string;
+  created_at: string;
 }
