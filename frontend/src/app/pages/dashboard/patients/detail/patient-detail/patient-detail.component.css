@@ -1,0 +1,36 @@
+.patient-detail {
+  max-width: 800px;
+}
+
+.patient-detail h2 {
+  font-size: 1.8rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.badge {
+  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 0.4em 0.8em;
+}
+
+.bg-pink {
+  background-color: #e83e8c;
+  color: white;
+}
+
+.patient-detail .row > div {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.patient-detail .row > div:last-child {
+  border-bottom: none;
+}

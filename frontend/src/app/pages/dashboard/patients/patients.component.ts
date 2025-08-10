@@ -6,6 +6,7 @@ import { Patient } from '../../../interfaces/patient';
 import { TableComponent } from '../../../shared/table/table.component';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { PatientService } from '../../../services/patient/patient.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patients',
@@ -24,7 +25,7 @@ export class PatientsComponent implements OnInit {
   showPatientModal = false;
   editingPatient: Patient | null = null;
 
-  constructor(private patientService: PatientService) { }
+  constructor(private patientService: PatientService, private router: Router) { }
 
   handleCloseModal() {
     this.showPatientModal = false;
@@ -37,6 +38,9 @@ export class PatientsComponent implements OnInit {
     });
   }
 
+  onRowSelected(patient: Patient) {
+    this.router.navigate(['/dashboard/patients', patient.id]);
+  }
   handleNewPatient(patient: Patient) {
     if (this.editingPatient) {
       const updatedPatient = { ...this.editingPatient, ...patient }; // conserva el id del original
@@ -84,11 +88,7 @@ export class PatientsComponent implements OnInit {
   columns = [
     { field: 'first_name', header: 'Nombres' },
     { field: 'last_name', header: 'Apellidos' },
-    { field: 'birth_date', header: 'Nacimiento' },
     { field: 'gender', header: 'Sexo' },
     { field: 'email', header: 'Email' },
-    { field: 'phone', header: 'Celular' },
-    { field: 'blood_type', header: 'Tipo Sangre' },
-    { field: 'fechaRegistro', header: 'Registro' },
   ];
 }

@@ -16,6 +16,11 @@ export class TableComponent<T> {
 
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
+  @Output() rowClick = new EventEmitter<T>();
+
+  onRowClick(item: T) {
+    this.rowClick.emit(item);
+  }
 
   currentPage = 1;
 

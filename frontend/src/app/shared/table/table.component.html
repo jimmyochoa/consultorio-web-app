@@ -6,15 +6,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of paginatedData">
+    <tr *ngFor="let item of paginatedData" (click)="onRowClick(item)" style="cursor: pointer;">
       <td *ngFor="let col of columns">
         {{ getValue(item, col.field) }}
       </td>
       <td *ngIf="showActions">
-        <button class="btn btn-sm btn-primary me-2" (click)="edit.emit(item)">
+        <button class="btn btn-sm btn-primary me-2" (click)="edit.emit(item); $event.stopPropagation()">
           Editar
         </button>
-        <button class="btn btn-sm btn-danger" (click)="delete.emit(item)">
+        <button class="btn btn-sm btn-danger" (click)="delete.emit(item); $event.stopPropagation()">
           Eliminar
         </button>
       </td>
@@ -28,16 +28,15 @@
   </button>
 
   <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
-    <button
-      class="btn btn-sm me-1"
+    <button class="btn btn-sm me-1"
       [ngClass]="{'btn-primary': currentPage === (i+1), 'btn-outline-primary': currentPage !== (i+1)}"
-      (click)="changePage(i+1)"
-    >
+      (click)="changePage(i+1)">
       {{ i + 1 }}
     </button>
   </ng-container>
 
-  <button class="btn btn-sm btn-secondary" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+  <button class="btn btn-sm btn-secondary" (click)="changePage(currentPage + 1)"
+    [disabled]="currentPage === totalPages">
     Siguiente
   </button>
 </div>

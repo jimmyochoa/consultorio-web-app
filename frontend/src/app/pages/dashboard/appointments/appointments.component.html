@@ -1,28 +1,16 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Dashboard de Citas</h2>
-    <app-button
-      label="Agregar Cita"
-      (click)="openNewAppointmentModal()"
-    ></app-button>
+    <app-button label="Agregar Cita" (click)="openNewAppointmentModal()"></app-button>
   </div>
 
-  <app-modal
-    *ngIf="showAppointmentModal"
-    [title]="selectedAppointment ? 'Editar Cita' : 'Nueva Cita'"
-    (close)="showAppointmentModal = false"
-  >
-    <app-appointment-form
-      [patients]="patients"
-      [initialData]="selectedAppointment"
-      (submitForm)="handleSaveAppointment($event)"
-    ></app-appointment-form>
+  <app-modal *ngIf="showAppointmentModal" [title]="selectedAppointment ? 'Editar Cita' : 'Nueva Cita'"
+    (close)="showAppointmentModal = false">
+    <app-appointment-form [patients]="patients" [initialData]="selectedAppointment"
+      (submitForm)="handleSaveAppointment($event)"></app-appointment-form>
   </app-modal>
 
-  <app-table
-    [data]="appointments"
-    [columns]="columns"
-    (edit)="onEdit($event)"
-    (delete)="onDelete($event)"
-  ></app-table>
+  <app-table [data]="appointments" [columns]="columns" (edit)="onEdit($event)" (delete)="onDelete($event)"
+    (rowClick)="onRowSelected($event)">
+  </app-table>
 </div>

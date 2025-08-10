@@ -8,6 +8,7 @@ import { Appointment } from '../../../interfaces/appointment';
 import { TableComponent } from '../../../shared/table/table.component';
 import { ButtonComponent } from "../../../shared/button/button.component";
 import { PatientService } from '../../../services/patient/patient.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,9 +26,14 @@ export class AppointmentsComponent implements OnInit {
   selectedAppointment: Appointment | null = null;
 
   constructor(
+    private router: Router,
     private appointmentService: AppointmentsService,
     private patientService: PatientService
   ) { }
+
+  onRowSelected(appointment: Appointment) {
+    this.router.navigate(['/dashboard/appointments', appointment.id]);
+  }
 
   ngOnInit(): void {
     this.patientService.getPatients().subscribe(data => {
