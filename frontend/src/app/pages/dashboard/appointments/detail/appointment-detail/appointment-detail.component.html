@@ -1,0 +1,74 @@
+<div class="appointment-detail px-3 py-4">
+  <div class="mb-3">
+    <button class="btn btn-outline-secondary btn-sm" (click)="goBack()">← Volver</button>
+  </div>
+
+  <div *ngIf="loading" class="alert alert-info">Cargando cita…</div>
+  <div *ngIf="error && !loading" class="alert alert-danger">{{ error }}</div>
+
+  <div *ngIf="appointment && !loading">
+    <!-- Encabezado -->
+    <h1 class="appointment-title">Cita #{{ appointment.id }}</h1>
+    <div class="appointment-date">
+      {{ appointment.start_time | date:'fullDate' }} · {{ appointment.start_time | date:'shortTime' }}
+    </div>
+
+    <!-- Información del paciente -->
+    <div class="card-section mt-3">
+      <h4 class="section-title">Información del paciente</h4>
+      <div class="info-grid">
+        <div class="card-item">
+          <span class="field-label">Nombre</span>
+          <div>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Sexo</span>
+          <span class="badge"
+                [ngClass]="{
+                  'bg-primary text-light': appointment.patient.gender === 'MASCULINO',
+                  'bg-pink text-light': appointment.patient.gender === 'FEMENINO'
+                }">
+            {{ appointment.patient.gender || '—' }}
+          </span>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Email</span>
+          <div>{{ appointment.patient.email || '—' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Teléfono</span>
+          <div>{{ appointment.patient.phone || '—' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Fecha de nacimiento</span>
+          <div>{{ appointment.patient.birth_date | date:'longDate' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Tipo de sangre</span>
+          <span class="badge bg-danger text-light px-3 py-1">
+            {{ appointment.patient.blood_type || '—' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalles de la cita -->
+    <div class="card-section mt-4">
+      <h4 class="section-title">Detalles de la cita</h4>
+      <div class="info-grid">
+        <div class="card-item">
+          <span class="field-label">Fecha de inicio</span>
+          <div>{{ appointment.start_time | date:'fullDate' }} · {{ appointment.start_time | date:'shortTime' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Fecha de fin</span>
+          <div>{{ appointment.end_time | date:'fullDate' }} · {{ appointment.end_time | date:'shortTime' }}</div>
+        </div>
+        <div class="card-item full-width">
+          <span class="field-label">Motivo</span>
+          <div>{{ appointment.reason || '—' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+.appointment-detail {
+  padding-left: 0; /* Todo alineado a la izquierda */
+  font-family: system-ui, sans-serif;
+}
+
+.appointment-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #111;
+}
+
+.appointment-date {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.card-section {
+  background-color: #fff;
+  border: 1px solid #e6e6e6; /* Gris muy suave */
+  border-radius: 10px;
+  padding: 1.25rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #777;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.35em 0.75em;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+.bg-pink {
+  background-color: #e83e8c;
+}
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
