@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 var specialtyAreaRoutes = require("./app/specialtyAreas/routes/specialtyAreaRoutes");
 var doctorRoutes = require("./app/doctors/routes/doctorRoutes");
@@ -12,6 +13,13 @@ var appointmentRoutes = require("./app/appointments/routes/appointmentRoutes");
 var prescriptionRoutes = require("./app/prescriptions/routes/prescriptionRoutes");
 
 var app = express();
+
+app.use(
+  cors({
+    origin: "*",
+    methods: "*",
+  })
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
