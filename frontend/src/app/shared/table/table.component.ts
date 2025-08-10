@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table',
+  standalone: true, // si es standalone
   imports: [CommonModule],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
@@ -11,11 +12,28 @@ export class TableComponent<T> {
   @Input() data: T[] = [];
   @Input() columns: { field: keyof T | string; header: string }[] = [];
   @Input() showActions = true;
+  @Input() pageSize = 5; // 👈 Tamaño de página configurable
 
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
 
-  // 👇 Aquí agregas el método getValue
+  currentPage = 1;
+
+  get totalPages(): number {
+    return Math.ceil(this.data.length / this.pageSize);
+  }
+
+  get paginatedData(): T[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.data.slice(start, start + this.pageSize);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
   getValue(item: T, field: keyof T | string): any {
     const keys = (field as string).split('.');
     return keys.reduce((acc: any, key) => acc?.[key], item as any);

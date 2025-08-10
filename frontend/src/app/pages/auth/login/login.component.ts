@@ -4,6 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from '../../../shared/alert/alert.component';
+import { AuthService } from '../../../services/auth/auth.service';
+import { DoctorLoginRequest } from '../../../interfaces/requests/DoctorLoginRequest';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,10 @@ export class LoginComponent {
 
   errorMessage = '';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   onSubmit() {
     if (this.loginForm.invalid) {
@@ -28,22 +33,24 @@ export class LoginComponent {
       return;
     }
 
-    const email = this.loginForm.get('email')!.value!;
-    const password = this.loginForm.get('password')!.value!;
-    const userData = localStorage.getItem(`user:${email}`);
-    if (!userData) {
-      this.errorMessage = 'Usuario no encontrado';
-      return;
-    }
+    const payload: DoctorLoginRequest = {
+      email: this.loginForm.get('email')!.value!,
+      password: this.loginForm.get('password')!.value!
+    };
 
-    const user = JSON.parse(userData);
-    if (user.password === password) {
-      localStorage.setItem('currentUser', userData);
-      this.errorMessage = '';
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.errorMessage = 'Contraseña incorrecta';
-    }
+    this.authService.login(payload).subscribe({
+      next: (res: any) => {
+        var cachedData = { id: res.id }
 
+        localStorage.setItem('user', JSON.stringify(cachedData));
+
+        this.errorMessage = '';
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Credenciales incorrectas';
+      }
+    });
   }
+
 }

@@ -1,21 +1,28 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-dropdown
-    formControlName="pacienteId"
-    [formControlName]="'pacienteId'"
+    formControlName="patient_id"
+    [formControlName]="'patient_id'"
     label="Paciente"
     [options]="patientOptions"
   ></app-dropdown>
 
   <app-form-field
-    formControlName="fechaHora"
-    [formControlName]="'fechaHora'"
+    formControlName="start_time"
+    [formControlName]="'start_time'"
     type="datetime-local"
-    label="Fecha y hora"
+    label="Fecha y hora de inicio"
   ></app-form-field>
 
   <app-form-field
-    formControlName="razon"
-    [formControlName]="'razon'"
+    formControlName="end_time"
+    [formControlName]="'end_time'"
+    type="datetime-local"
+    label="Fecha y hora de fin"
+  ></app-form-field>
+
+  <app-form-field
+    formControlName="reason"
+    [formControlName]="'reason'"
     label="Razón de cita"
   ></app-form-field>
 
