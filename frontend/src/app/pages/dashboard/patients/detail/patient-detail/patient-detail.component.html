@@ -1,0 +1,62 @@
+<div class="patient-detail px-3 py-4">
+  <div class="mb-4">
+    <button class="btn btn-outline-secondary btn-sm" (click)="goBack()">
+      ← Volver
+    </button>
+  </div>
+
+  <!-- Estado -->
+  <div *ngIf="loading" class="alert alert-info">Cargando paciente…</div>
+  <div *ngIf="error && !loading" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Contenido -->
+  <div *ngIf="patient && !loading" class="detail-container">
+    <!-- Encabezado -->
+    <header class="detail-header">
+      <div>
+        <h2 class="fw-bold mb-1">{{ patient.first_name }} {{ patient.last_name }}</h2>
+        <small class="text-muted">ID: {{ patient.id }}</small>
+      </div>
+    </header>
+
+    <!-- Datos -->
+    <section class="row g-4 mt-3">
+      <div class="col-md-6">
+        <label class="field-label">Sexo</label>
+        <div>
+          <span class="badge gender-badge"
+                [ngClass]="{
+                  'bg-primary': patient.gender === 'MASCULINO',
+                  'bg-pink': patient.gender === 'FEMENINO'
+                }">
+            {{ patient.gender || '—' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="field-label">Email</label>
+        <div class="field-value">{{ patient.email || '—' }}</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="field-label">Teléfono</label>
+        <div class="field-value">{{ patient.phone || '—' }}</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="field-label">Fecha de nacimiento</label>
+        <div class="field-value">{{ patient.birth_date | date:'longDate' }}</div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="field-label">Tipo de sangre</label>
+        <div>
+          <span class="badge bg-danger text-light px-3 py-2 blood-badge">
+            {{ patient.blood_type || '—' }}
+          </span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -11,6 +11,7 @@ import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { MainComponent } from './layouts/main/main.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
+import { PatientDetailComponent } from './pages/dashboard/patients/detail/patient-detail/patient-detail.component';
 
 export const routes: Routes = [
   // Public routes inside Main layout
@@ -44,6 +45,7 @@ export const routes: Routes = [
     children: [
       { path: 'appointments', component: AppointmentsComponent },
       { path: 'patients', component: PatientsComponent },
+      { path: 'patients/:id', component: PatientDetailComponent },
       { path: '**', redirectTo: 'appointments' }
     ]
   },

@@ -28,4 +28,8 @@ export class PatientService {
     return this.http.delete<void>(`${this.baseUrl}/patients/${id}`);
   }
 
+  getPatientById(id: number) {
+    return this.http.get<Patient>(`${this.baseUrl}/patients/${id}`);
+  }
+
 }
