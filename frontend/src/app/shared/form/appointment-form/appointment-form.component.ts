@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormFieldComponent } from "../form-field/form-field.component";
 import { DropdownComponent } from "../../dropdown/dropdown.component";
 import { Appointment } from '../../../interfaces/appointment';
@@ -19,10 +19,11 @@ export class AppointmentFormComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      id: [null],
-      pacienteId: ['', Validators.required],
-      fechaHora: ['', [Validators.required, this.noPastDateValidator]],
-      razon: ['', Validators.required]
+      doctor_id: JSON.parse(localStorage.getItem('user') || '{}')?.id,
+      patient_id: ['', Validators.required],
+      start_time: ['', [Validators.required, this.noPastDateValidator]],
+      end_time: ['', [Validators.required, this.noPastDateValidator]],
+      reason: ['', Validators.required]
     });
   }
 
@@ -38,16 +39,19 @@ export class AppointmentFormComponent implements OnChanges {
 
   onSubmit() {
     if (this.form.valid) {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.form.patchValue({ doctor_id: user?.id });
+
       this.submitForm.emit(this.form.value);
       this.form.reset();
-    }else {
-      this.form.markAllAsTouched(); 
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 
   get patientOptions() {
     return this.patients.map(p => ({
-      label: p.nombres + ' ' + p.apellidos,
+      label: p.first_name + ' ' + p.last_name,
       value: p.id
     }));
   }

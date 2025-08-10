@@ -7,11 +7,27 @@ import { Appointment } from '../../interfaces/appointment';
   providedIn: 'root'
 })
 export class AppointmentsService {
-  private appointmentsUrl = 'https://raw.githubusercontent.com/LeynderS/consultorio-datos/main/appointments.json';
+  private readonly baseUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(this.appointmentsUrl);
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    const doctorId = user?.id;
+
+    return this.http.get<Appointment[]>(`${this.baseUrl}/appointments/doctor/${doctorId}`);
+  }
+
+  createAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>(`${this.baseUrl}/appointments`, appointment);
+  }
+
+  updateAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.put<Appointment>(`${this.baseUrl}/appointments/${appointment.id}`, appointment);
+  }
+
+  deleteAppointment(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/appointments/${id}`);
   }
 }

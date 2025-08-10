@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } 
 import { FormFieldComponent } from "../form-field/form-field.component";
 import { DropdownComponent } from "../../dropdown/dropdown.component";
 import { Patient } from "../../../interfaces/patient"; // Asegúrate de que la ruta sea correcta
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-patient-form',
@@ -26,19 +27,19 @@ export class PatientFormComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-    nombres: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
-    apellidos: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
-    fechaNacimiento: ['', [Validators.required, this.noFutureDateValidator]],
-    sexo: ['', Validators.required],
+    first_name: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+    last_name: ['', [Validators.required, Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)]],
+    birth_date: ['', [Validators.required, this.noFutureDateValidator]],
+    gender: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    celular: [
+    phone: [
       '',
       [
         Validators.required,
         Validators.pattern(/^09\d{8}$/) // 10 dígitos, empieza con 09
       ]
     ],
-    tipoSangre: ['', Validators.required],
+    blood_type: ['', Validators.required],
   });
 
   }

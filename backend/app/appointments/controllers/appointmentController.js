@@ -2,7 +2,7 @@ const { Appointment, Patient, Doctor } = require("../../../models");
 const { Op } = require("sequelize");
 
 module.exports = {
-  // Obtener todos las citas
+  // Obtener todas las citas
   async getAll(req, res) {
     try {
       const appointments = await Appointment.findAll({
@@ -18,7 +18,7 @@ module.exports = {
       res.status(200).json(appointments);
     } catch (error) {
       console.error("Error en getAll appointments:", error);
-      res.status(500).json({ message: "Error retrieving appointments", error });
+      res.status(500).json({ message: "Error al obtener las citas", error });
     }
   },
 
@@ -37,11 +37,11 @@ module.exports = {
         ],
       });
       if (!appointment) {
-        return res.status(404).json({ message: "Appointment not found" });
+        return res.status(404).json({ message: "Cita no encontrada" });
       }
       res.status(200).json(appointment);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving appointment", error });
+      res.status(500).json({ message: "Error al obtener la cita", error });
     }
   },
 
@@ -63,7 +63,7 @@ module.exports = {
       res.status(200).json(appointments);
     } catch (error) {
       console.error("Error en getByDoctorId appointments:", error);
-      res.status(500).json({ message: "Error retrieving appointments", error });
+      res.status(500).json({ message: "Error al obtener las citas", error });
     }
   },
 
@@ -72,7 +72,6 @@ module.exports = {
     try {
       const { doctor_id, patient_id, start_time, end_time, reason } = req.body;
 
-      // Validar horario laboral (ejemplo 8am a 6pm)
       const startDate = new Date(start_time);
       const endDate = new Date(end_time);
 
@@ -81,7 +80,7 @@ module.exports = {
 
       if (startHour < 8 || endHour > 18) {
         return res.status(400).json({
-          message: "The working hours are from 8am to 6pm",
+          message: "El horario laboral es de 8:00 a 18:00 horas",
         });
       }
 
@@ -99,7 +98,7 @@ module.exports = {
 
       if (overlapping) {
         return res.status(400).json({
-          message: "The appointment overlaps with an existing one",
+          message: "La cita se superpone con otra existente",
         });
       }
 
@@ -113,7 +112,7 @@ module.exports = {
 
       res.status(201).json(newAppointment);
     } catch (error) {
-      res.status(500).json({ message: "Error creating appointment", error });
+      res.status(500).json({ message: "Error al crear la cita", error });
     }
   },
 
@@ -126,10 +125,9 @@ module.exports = {
       const appointment = await Appointment.findByPk(id);
 
       if (!appointment) {
-        return res.status(404).json({ message: "Appointment not found" });
+        return res.status(404).json({ message: "Cita no encontrada" });
       }
 
-      // Validar horario laboral (ejemplo 8am a 6pm)
       const startDate = new Date(start_time);
       const endDate = new Date(end_time);
 
@@ -138,25 +136,23 @@ module.exports = {
 
       if (startHour < 8 || endHour > 18) {
         return res.status(400).json({
-          message: "The working hours are from 8am to 6pm",
+          message: "El horario laboral es de 8:00 a 18:00 horas",
         });
       }
 
       const overlapping = await Appointment.findOne({
         where: {
           doctor_id,
-          [Op.or]: [
-            {
-              start_time: { [Op.lt]: end_time },
-              end_time: { [Op.gt]: start_time },
-            },
-          ],
-        },
+          id: { [Op.ne]: id }, // excluir la cita actual
+          start_time: { [Op.lt]: end_time },
+          end_time: { [Op.gt]: start_time }
+        }
       });
+
 
       if (overlapping) {
         return res.status(400).json({
-          message: "The appointment overlaps with an existing one",
+          message: "La cita se superpone con otra existente",
         });
       }
 
@@ -169,7 +165,7 @@ module.exports = {
       });
       res.status(200).json(appointmentUpdated);
     } catch (error) {
-      res.status(500).json({ message: "Error updating appointment", error });
+      res.status(500).json({ message: "Error al actualizar la cita", error });
     }
   },
 
@@ -180,13 +176,13 @@ module.exports = {
       const appointment = await Appointment.findByPk(id);
 
       if (!appointment) {
-        return res.status(404).json({ message: "Appointment not found" });
+        return res.status(404).json({ message: "Cita no encontrada" });
       }
 
       await appointment.destroy();
-      res.status(204).send(); // No content
+      res.status(204).send();
     } catch (error) {
-      res.status(500).json({ message: "Error deleting appointment", error });
+      res.status(500).json({ message: "Error al eliminar la cita", error });
     }
   },
 };

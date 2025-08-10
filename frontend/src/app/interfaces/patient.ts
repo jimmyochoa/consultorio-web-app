@@ -1,11 +1,10 @@
 export interface Patient {
   id: number;
-  nombres: string;
-  apellidos: string;
-  fechaNacimiento: string; 
-  sexo: 'Masculino' | 'Femenino' ;
+  first_name: string;
+  last_name: string;
+  birth_date: string;
+  gender: 'MASCULINO' | 'FEMENINO';
   email: string;
-  celular: string;
-  tipoSangre: string; 
-  fechaRegistro: string; 
+  phone: string;
+  blood_type: string;
 }

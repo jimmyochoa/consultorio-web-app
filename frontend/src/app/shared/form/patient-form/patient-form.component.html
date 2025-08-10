@@ -1,12 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <app-form-field
-    formControlName="nombres"
-    [formControlName]="'nombres'"
+    formControlName="first_name"
+    [formControlName]="'first_name'"
     label="Nombres"
   ></app-form-field>
   <app-form-field
-    formControlName="apellidos"
-    [formControlName]="'apellidos'"
+    formControlName="last_name"
+    [formControlName]="'last_name'"
     label="Apellidos"
   ></app-form-field>
   <app-form-field
@@ -16,20 +16,20 @@
     label="Correo electrónico"
   ></app-form-field>
   <app-form-field
-    formControlName="celular"
-    [formControlName]="'celular'"
+    formControlName="phone"
+    [formControlName]="'phone'"
     label="Celular"
   ></app-form-field>
   <app-form-field
-    formControlName="fechaNacimiento"
-    [formControlName]="'fechaNacimiento'"
+    formControlName="birth_date"
+    [formControlName]="'birth_date'"
     type="date"
     label="Fecha de nacimiento"
   ></app-form-field>
 
   <app-dropdown
-    formControlName="sexo"
-    [formControlName]="'sexo'"
+    formControlName="gender"
+    [formControlName]="'gender'"
     label="Sexo"
     [options]="[
       { label: 'Masculino', value: 'Masculino' },
@@ -38,8 +38,8 @@
   ></app-dropdown>
 
   <app-dropdown
-    formControlName="tipoSangre"
-    [formControlName]="'tipoSangre'"
+    formControlName="blood_type"
+    [formControlName]="'blood_type'"
     label="Tipo de Sangre"
     [options]="bloodTypesOptions"
   ></app-dropdown>

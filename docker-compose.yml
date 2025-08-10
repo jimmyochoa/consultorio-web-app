@@ -17,6 +17,8 @@ services:
       - DB_NAME=${MYSQL_DATABASE}
     depends_on:
       - mysql
+    networks:
+      - app_net
     restart: unless-stopped
 
   frontend:
@@ -29,6 +31,8 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV}
+    networks:
+      - app_net
     restart: unless-stopped
 
   mysql:
@@ -42,6 +46,8 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - app_net
     restart: unless-stopped
 
   phpmyadmin:
@@ -53,7 +59,13 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     depends_on:
       - mysql
+    networks:
+      - app_net
     restart: unless-stopped
 
 volumes:
   mysql_data:
+
+networks:
+  app_net:
+    driver: bridge

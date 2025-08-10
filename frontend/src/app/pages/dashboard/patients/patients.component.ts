@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { PatientFormComponent } from '../../../shared/form/patient-form/patient-form.component';
-import { PatientService } from '../../../services/dashboard/patient.service';
 import { Patient } from '../../../interfaces/patient';
 import { TableComponent } from '../../../shared/table/table.component';
 import { ButtonComponent } from '../../../shared/button/button.component';
+import { PatientService } from '../../../services/patient/patient.service';
 
 @Component({
   selector: 'app-patients',
@@ -24,7 +24,7 @@ export class PatientsComponent implements OnInit {
   showPatientModal = false;
   editingPatient: Patient | null = null;
 
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService) { }
 
   handleCloseModal() {
     this.showPatientModal = false;
@@ -39,15 +39,26 @@ export class PatientsComponent implements OnInit {
 
   handleNewPatient(patient: Patient) {
     if (this.editingPatient) {
-      // Editar paciente
-      this.patientService.updatePatient({ ...this.editingPatient, ...patient });
+      const updatedPatient = { ...this.editingPatient, ...patient }; // conserva el id del original
+
+      this.patientService.updatePatient(updatedPatient).subscribe({
+        next: (res) => {
+          const index = this.patients.findIndex(p => p.id === res.id);
+          if (index !== -1) this.patients[index] = res;
+          this.editingPatient = null;
+        }
+      });
     } else {
-      // Nuevo paciente: asigna nuevo id manualmente
-      const newId =
-        this.patients.length > 0
-          ? Math.max(...this.patients.map((p) => p.id)) + 1
-          : 1;
-      this.patientService.addPatient({ ...patient, id: newId });
+      //handle create patient
+      this.patientService.createPatient(patient).subscribe({
+        next: (newPatient) => {
+          console.log('Paciente creado:', newPatient);
+          this.patients.push(newPatient);
+        },
+        error: (err) => {
+          console.error('Error al crear paciente:', err);
+        }
+      });
     }
     this.showPatientModal = false;
     this.editingPatient = null;
@@ -55,9 +66,13 @@ export class PatientsComponent implements OnInit {
 
   onDelete(patient: Patient) {
     if (
-      confirm(`¿Eliminar paciente ${patient.nombres} ${patient.apellidos}?`)
+      confirm(`¿Eliminar paciente ${patient.first_name} ${patient.last_name}?`)
     ) {
-      this.patientService.deletePatient(patient.id);
+      this.patientService.deletePatient(patient.id).subscribe({
+        next: () => {
+          this.patients = this.patients.filter(p => p.id !== patient.id);
+        },
+      });
     }
   }
 
@@ -67,13 +82,13 @@ export class PatientsComponent implements OnInit {
   }
 
   columns = [
-    { field: 'nombres', header: 'Nombres' },
-    { field: 'apellidos', header: 'Apellidos' },
-    { field: 'fechaNacimiento', header: 'Nacimiento' },
-    { field: 'sexo', header: 'Sexo' },
+    { field: 'first_name', header: 'Nombres' },
+    { field: 'last_name', header: 'Apellidos' },
+    { field: 'birth_date', header: 'Nacimiento' },
+    { field: 'gender', header: 'Sexo' },
     { field: 'email', header: 'Email' },
-    { field: 'celular', header: 'Celular' },
-    { field: 'tipoSangre', header: 'Tipo Sangre' },
+    { field: 'phone', header: 'Celular' },
+    { field: 'blood_type', header: 'Tipo Sangre' },
     { field: 'fechaRegistro', header: 'Registro' },
   ];
 }

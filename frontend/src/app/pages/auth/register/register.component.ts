@@ -1,10 +1,13 @@
-// register.component.ts
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ButtonComponent } from '../../../shared/button/button.component';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from '../../../shared/alert/alert.component';
+import { SpecialtiesService } from '../../../services/specialty-areas.service';
+import { Specialty } from '../../../interfaces/Specialty';
+import { AuthService } from '../../../services/auth/auth.service';
+import { DoctorCreateRequest } from '../../../interfaces/requests/DoctorCreateRequest';
 
 @Component({
   selector: 'app-register',
@@ -15,16 +18,29 @@ import { AlertComponent } from '../../../shared/alert/alert.component';
 })
 export class RegisterComponent {
   registerForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
+    first_name: new FormControl('', [Validators.required]),
+    last_name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]), // No se validará
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     confirmPassword: new FormControl('', [Validators.required]),
+    specialty_area_id: new FormControl('', [Validators.required]),
   });
 
   errorMessage = '';
   successMessage = '';
+  specialties: Specialty[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private specialtiesService: SpecialtiesService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.specialtiesService.getSpecialties().subscribe(data => {
+      this.specialties = data;
+    });
+  }
 
   onSubmit(): void {
     if (this.registerForm.invalid) {
@@ -33,7 +49,8 @@ export class RegisterComponent {
       return;
     }
 
-    const { name, email, password, confirmPassword } = this.registerForm.value;
+    const { first_name, last_name, email, password, confirmPassword, specialty_area_id } =
+      this.registerForm.value;
 
     if (password !== confirmPassword) {
       this.errorMessage = 'Las contraseñas no coinciden';
@@ -41,21 +58,20 @@ export class RegisterComponent {
       return;
     }
 
-    const existingUser = localStorage.getItem(`user:${email}`);
-    if (existingUser) {
-      this.errorMessage = 'El correo ya está registrado';
-      this.successMessage = '';
-      return;
-    }
+    const payload: DoctorCreateRequest = {
+      first_name: first_name!,
+      last_name: last_name!,
+      email: email!,
+      password: password!,
+      specialty_area_id: Number(specialty_area_id)
+    };
 
-    const userData = { name, email, password }; // ⚠️ No se guarda password
-    localStorage.setItem(`user:${email}`, JSON.stringify(userData));
-
-    this.errorMessage = '';
-    this.successMessage = 'Registro exitoso';
-
-    setTimeout(() => {
-      this.router.navigate(['/auth/login']);
-    }, 1500);
+    this.authService.register(payload).subscribe(() => {
+      this.errorMessage = '';
+      this.successMessage = 'Registro exitoso';
+      setTimeout(() => {
+        this.router.navigate(['/auth/login']);
+      }, 1500);
+    });
   }
 }
