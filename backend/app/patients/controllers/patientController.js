@@ -5,7 +5,7 @@ module.exports = {
   async getAll(req, res) {
     try {
       const patients = await Patient.findAll({
-        attributes: { exclude: ["created_at", "updated_at"] },
+        attributes: { exclude: ["updated_at"] },
       });
       res.status(200).json(patients);
     } catch (error) {
@@ -19,7 +19,7 @@ module.exports = {
     try {
       const { id } = req.params;
       const patient = await Patient.findByPk(id, {
-        attributes: { exclude: ["created_at", "updated_at"] },
+        attributes: { exclude: ["updated_at"] },
       });
       if (!patient) {
         return res.status(404).json({ message: "Patient not found" });

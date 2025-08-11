@@ -54,6 +54,23 @@ button.btn-primary:hover {
   background-color: #061a3d;
 }
 
+button.btn-outline-primary {
+  background-color: transparent;
+  border: 1px solid #163265;
+  color: #163265;
+}
+
+button.btn-outline-primary:hover {
+  background-color: #163265d2;
+  border: 1px solid #163265d2;
+  color: white;
+}
+
+button.btn-primary:active, button.btn-outline-primary:active {
+  border: 1px solid #163265;
+  color: white;
+}
+
 button.btn-danger {
   background-color: #d9534f;
   border: none;

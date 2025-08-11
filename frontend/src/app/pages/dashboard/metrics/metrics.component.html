@@ -1,0 +1,61 @@
+<div class="metrics-container" *ngIf="!loading && metrics">
+  <div class="title-container text-center">
+    <h2 class="fw-bold">Hola, <span class="text-accent">{{ metrics.doctorName }}</span> 👋</h2>
+    <p class="fs-5 text-muted">Área de especialidad: <strong>{{ metrics.specialtyArea }}</strong></p>
+  </div>
+
+  <div class="row g-4">
+    <!-- Total doctores -->
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card text-center shadow-sm h-100">
+        <div class="metric-icon bg-accent mb-3">
+          <i class="bi bi-person-badge"></i>
+        </div>
+        <h6 class="text-muted">Total de Doctores</h6>
+        <p class="metric-value">{{ metrics.totalDoctors }}</p>
+      </div>
+    </div>
+
+    <!-- Total pacientes -->
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card text-center shadow-sm h-100">
+        <div class="metric-icon bg-accent mb-3">
+          <i class="bi bi-people"></i>
+        </div>
+        <h6 class="text-muted">Total de Pacientes</h6>
+        <p class="metric-value">{{ metrics.totalPatients }}</p>
+      </div>
+    </div>
+
+    <!-- Doctores por especialidad -->
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card shadow-sm h-100">
+        <div class="metric-icon bg-accent mb-3">
+          <i class="bi bi-diagram-3"></i>
+        </div>
+        <h6 class="text-muted">Doctores por Especialidad</h6>
+        <ul class="list-group list-group-flush small">
+          <li *ngFor="let item of metrics.doctorsBySpecialty"
+            class="list-group-item d-flex justify-content-between align-items-center">
+            {{ item.specialty }}
+            <span class="badge bg-accent rounded-pill">{{ item.count }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Citas -->
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card text-center shadow-sm h-100">
+        <div class="metric-icon bg-accent mb-3">
+          <i class="bi bi-calendar-check"></i>
+        </div>
+        <h6 class="text-muted">Citas Pasadas</h6>
+        <p class="metric-value">{{ metrics.pastAppointments }}</p>
+        <hr>
+        <h6 class="text-muted">Citas Próximas</h6>
+        <p class="metric-value">{{ metrics.upcomingAppointments }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ export class TableComponent<T> {
   @Input() columns: { field: keyof T | string; header: string }[] = [];
   @Input() showActions = true;
   @Input() pageSize = 5; // 👈 Tamaño de página configurable
+  @Input() formatters?: { [field: string]: (value: any) => string };
 
   @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
@@ -41,6 +42,11 @@ export class TableComponent<T> {
 
   getValue(item: T, field: keyof T | string): any {
     const keys = (field as string).split('.');
-    return keys.reduce((acc: any, key) => acc?.[key], item as any);
+    const value = keys.reduce((acc: any, key) => acc?.[key], item as any);
+
+    if (this.formatters && this.formatters[field as string]) {
+      return this.formatters[field as string](value);
+    }
+    return value;
   }
 }

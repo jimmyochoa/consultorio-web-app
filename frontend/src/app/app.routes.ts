@@ -13,6 +13,7 @@ import { MainComponent } from './layouts/main/main.component';
 import { LogoutComponent } from './pages/auth/logout/logout.component';
 import { PatientDetailComponent } from './pages/dashboard/patients/detail/patient-detail/patient-detail.component';
 import { AppointmentDetailComponent } from './pages/dashboard/appointments/detail/appointment-detail/appointment-detail.component';
+import { MetricsComponent } from './pages/dashboard/metrics/metrics.component';
 
 export const routes: Routes = [
   // Public routes inside Main layout
@@ -21,8 +22,8 @@ export const routes: Routes = [
     component: MainComponent,
     children: [
       { path: '', component: HomeComponent },
-      { path: 'about', component: AboutComponent }
-    ]
+      { path: 'about', component: AboutComponent },
+    ],
   },
 
   // Auth routes inside Auth layout
@@ -31,11 +32,11 @@ export const routes: Routes = [
     component: AuthComponent,
     //canActivate: [GuestGuard],
     children: [
-      { path: 'login', component: LoginComponent},
+      { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'logout', component: LogoutComponent },
       { path: '**', redirectTo: 'login' },
-    ]
+    ],
   },
 
   // Dashboard routes inside Dashboard layout
@@ -44,13 +45,14 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
     children: [
+      { path: 'metrics', component: MetricsComponent },
       { path: 'appointments', component: AppointmentsComponent },
       { path: 'appointments/:id', component: AppointmentDetailComponent },
       { path: 'patients', component: PatientsComponent },
       { path: 'patients/:id', component: PatientDetailComponent },
-      { path: '**', redirectTo: 'appointments' }
-    ]
+      { path: '**', redirectTo: 'metrics' },
+    ],
   },
 
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

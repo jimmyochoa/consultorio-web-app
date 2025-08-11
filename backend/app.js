@@ -11,6 +11,7 @@ var authRoutes = require("./app/auth/routes/authRoutes");
 var patientRoutes = require("./app/patients/routes/patientRoutes");
 var appointmentRoutes = require("./app/appointments/routes/appointmentRoutes");
 var prescriptionRoutes = require("./app/prescriptions/routes/prescriptionRoutes");
+var metricRoutes = require("./app/metrics/routes/metricRoutes");
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.use("/", authRoutes);
 app.use("/patients", patientRoutes);
 app.use("/appointments", appointmentRoutes);
 app.use("/prescriptions", prescriptionRoutes);
+app.use("/metrics", metricRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

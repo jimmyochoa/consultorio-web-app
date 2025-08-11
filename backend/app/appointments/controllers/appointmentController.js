@@ -1,4 +1,4 @@
-const { Appointment, Patient, Doctor } = require("../../../models");
+const { Appointment, Patient, Prescription } = require("../../../models");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -32,6 +32,11 @@ module.exports = {
           {
             model: Patient,
             as: "patient",
+            attributes: { exclude: ["created_at", "updated_at"] },
+          },
+          {
+            model: Prescription,
+            as: "prescription",
             attributes: { exclude: ["created_at", "updated_at"] },
           },
         ],
@@ -145,10 +150,9 @@ module.exports = {
           doctor_id,
           id: { [Op.ne]: id }, // excluir la cita actual
           start_time: { [Op.lt]: end_time },
-          end_time: { [Op.gt]: start_time }
-        }
+          end_time: { [Op.gt]: start_time },
+        },
       });
-
 
       if (overlapping) {
         return res.status(400).json({
