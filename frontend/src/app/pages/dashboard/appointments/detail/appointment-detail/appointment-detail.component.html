@@ -8,7 +8,7 @@
 
   <div *ngIf="appointment && !loading">
     <!-- Encabezado -->
-    <h1 class="appointment-title">Cita #{{ appointment.id }}</h1>
+    <h1 class="appointment-title">Cita con {{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</h1>
     <div class="appointment-date">
       {{ appointment.start_time | date:'fullDate' }} · {{ appointment.start_time | date:'shortTime' }}
     </div>
@@ -24,7 +24,7 @@
         <div class="card-item">
           <span class="field-label">Sexo</span>
           <span class="badge" [ngClass]="{
-                  'bg-primary text-light': appointment.patient.gender === 'MASCULINO',
+                  'bg-blue text-light': appointment.patient.gender === 'MASCULINO',
                   'bg-pink text-light': appointment.patient.gender === 'FEMENINO'
                 }">
             {{ appointment.patient.gender || '—' }}
@@ -44,7 +44,7 @@
         </div>
         <div class="card-item">
           <span class="field-label">Tipo de sangre</span>
-          <span class="badge bg-danger text-light px-3 py-1">
+          <span class="badge bg-red text-light px-3 py-1">
             {{ appointment.patient.blood_type || '—' }}
           </span>
         </div>
@@ -54,7 +54,7 @@
     <!-- Detalles de la cita -->
     <div class="card-section mt-4">
       <h4 class="section-title">Detalles de la cita</h4>
-      <div class="info-grid">
+      <div class="cita-grid">
         <div class="card-item">
           <span class="field-label">Fecha de inicio</span>
           <div>{{ appointment.start_time | date:'fullDate' }} · {{ appointment.start_time | date:'hh:mm a' }}</div>

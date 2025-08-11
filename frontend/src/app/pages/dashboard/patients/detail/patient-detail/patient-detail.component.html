@@ -10,58 +10,51 @@
   <div *ngIf="error && !loading" class="alert alert-danger">{{ error }}</div>
 
   <!-- Contenido -->
-  <div *ngIf="patient && !loading" class="detail-container">
+  <div *ngIf="patient && !loading">
     <!-- Encabezado -->
-    <header class="detail-header">
-      <div>
-        <h2 class="fw-bold mb-1">{{ patient.first_name }} {{ patient.last_name }}</h2>
-        <small class="text-muted">ID: {{ patient.id }}</small>
-      </div>
-    </header>
+    <h1 class="patient-title">Paciente {{ patient.first_name }} {{ patient.last_name }}</h1>
+    <small class="text-muted">ID: {{ patient.id }}</small>
 
-    <!-- Datos -->
-    <section class="row g-4 mt-3">
-      <div class="col-md-6">
-        <label class="field-label">Sexo</label>
-        <div>
-          <span class="badge gender-badge" [ngClass]="{
-                  'bg-primary': patient.gender === 'MASCULINO',
-                  'bg-pink': patient.gender === 'FEMENINO'
+    <!-- Información del paciente -->
+    <div class="card-section mt-3">
+      <h4 class="section-title">Información del paciente</h4>
+      <div class="info-grid">
+        <div class="card-item">
+          <span class="field-label">Nombre</span>
+          <div>{{ patient.first_name }} {{ patient.last_name }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Sexo</span>
+          <span class="badge" [ngClass]="{
+                  'bg-blue text-light': patient.gender === 'MASCULINO',
+                  'bg-pink text-light': patient.gender === 'FEMENINO'
                 }">
             {{ patient.gender || '—' }}
           </span>
         </div>
-      </div>
-
-      <div class="col-md-6">
-        <label class="field-label">Email</label>
-        <div class="field-value">{{ patient.email || '—' }}</div>
-      </div>
-
-      <div class="col-md-6">
-        <label class="field-label">Teléfono</label>
-        <div class="field-value">{{ patient.phone || '—' }}</div>
-      </div>
-
-      <div class="col-md-6">
-        <label class="field-label">Fecha de nacimiento</label>
-        <div class="field-value">{{ patient.birth_date | date:'longDate' }}</div>
-      </div>
-
-      <div class="col-md-6">
-        <label class="field-label">Tipo de sangre</label>
-        <div>
-          <span class="badge bg-danger text-light px-3 py-2 blood-badge">
+        <div class="card-item">
+          <span class="field-label">Email</span>
+          <div>{{ patient.email || '—' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Teléfono</span>
+          <div>{{ patient.phone || '—' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Fecha de nacimiento</span>
+          <div>{{ patient.birth_date | date:'longDate' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Fecha de registro</span>
+          <div>{{ patient.created_at | date:'longDate' }}</div>
+        </div>
+        <div class="card-item">
+          <span class="field-label">Tipo de sangre</span>
+          <span class="badge bg-red text-light px-3 py-1">
             {{ patient.blood_type || '—' }}
           </span>
         </div>
       </div>
-
-      <div class="col-md-6">
-        <label class="field-label">Fecha de registro</label>
-        <div class="field-value">{{ patient.created_at | date:'longDate' }}</div>
-      </div>
-
-    </section>
+    </div>
   </div>
 </div>
