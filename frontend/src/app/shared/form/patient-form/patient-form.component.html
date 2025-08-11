@@ -1,50 +1,22 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-form-field
-    formControlName="first_name"
-    [formControlName]="'first_name'"
-    label="Nombres"
-  ></app-form-field>
-  <app-form-field
-    formControlName="last_name"
-    [formControlName]="'last_name'"
-    label="Apellidos"
-  ></app-form-field>
-  <app-form-field
-    formControlName="email"
-    [formControlName]="'email'"
-    type="email"
-    label="Correo electrónico"
-  ></app-form-field>
-  <app-form-field
-    formControlName="phone"
-    [formControlName]="'phone'"
-    label="Celular"
-  ></app-form-field>
-  <app-form-field
-    formControlName="birth_date"
-    [formControlName]="'birth_date'"
-    type="date"
-    label="Fecha de nacimiento"
-  ></app-form-field>
+  <app-form-field formControlName="first_name" [formControlName]="'first_name'" label="Nombres"></app-form-field>
+  <app-form-field formControlName="last_name" [formControlName]="'last_name'" label="Apellidos"></app-form-field>
+  <app-form-field formControlName="email" [formControlName]="'email'" type="email"
+    label="Correo electrónico"></app-form-field>
+  <app-form-field formControlName="phone" [formControlName]="'phone'" label="Celular"></app-form-field>
+  <app-form-field formControlName="birth_date" [formControlName]="'birth_date'" type="date"
+    label="Fecha de nacimiento"></app-form-field>
 
-  <app-dropdown
-    formControlName="gender"
-    [formControlName]="'gender'"
-    label="Sexo"
-    [options]="[
+  <app-dropdown formControlName="gender" [formControlName]="'gender'" label="Sexo" [options]="[
       { label: 'Masculino', value: 'Masculino' },
       { label: 'Femenino', value: 'Femenino' }
-    ]"
-  ></app-dropdown>
+    ]"></app-dropdown>
 
-  <app-dropdown
-    formControlName="blood_type"
-    [formControlName]="'blood_type'"
-    label="Tipo de Sangre"
-    [options]="bloodTypesOptions"
-  ></app-dropdown>
+  <app-dropdown formControlName="blood_type" [formControlName]="'blood_type'" label="Tipo de Sangre"
+    [options]="bloodTypesOptions"></app-dropdown>
 
   <div class="d-grid">
-    <button class="btn btn-primary mt-3" type="submit">Guardar Paciente</button>
+    <app-button type="submit" label="Guardar" class="btn-success mt-3"></app-button>
+
   </div>
 </form>

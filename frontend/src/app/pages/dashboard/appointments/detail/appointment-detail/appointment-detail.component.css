@@ -66,6 +66,26 @@
   background-color: #e83e8c;
 }
 
+button.btn-danger {
+  background-color: #d9534f;
+  border: none;
+  color: white;
+}
+
+button.btn-danger:hover {
+  background-color: #72211f;
+}
+
+button.btn-primary {
+  background-color: #163265;
+  border: none;
+  color: white;
+}
+
+button.btn-primary:hover {
+  background-color: #061a3d;
+}
+
 @media (max-width: 768px) {
   .info-grid {
     grid-template-columns: 1fr;

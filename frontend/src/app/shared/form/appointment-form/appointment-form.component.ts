@@ -1,14 +1,34 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
-import { FormFieldComponent } from "../form-field/form-field.component";
-import { DropdownComponent } from "../../dropdown/dropdown.component";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
+import { FormFieldComponent } from '../form-field/form-field.component';
+import { DropdownComponent } from '../../dropdown/dropdown.component';
 import { Appointment } from '../../../interfaces/appointment';
+import { ButtonComponent } from '../../button/button.component';
 
 @Component({
   selector: 'app-appointment-form',
-  imports: [FormFieldComponent, DropdownComponent, ReactiveFormsModule],
+  imports: [
+    FormFieldComponent,
+    DropdownComponent,
+    ReactiveFormsModule,
+    ButtonComponent,
+  ],
   templateUrl: './appointment-form.component.html',
-  styleUrl: './appointment-form.component.css'
+  styleUrl: './appointment-form.component.css',
 })
 export class AppointmentFormComponent implements OnChanges {
   @Input() patients: any[] = [];
@@ -23,7 +43,7 @@ export class AppointmentFormComponent implements OnChanges {
       patient_id: ['', Validators.required],
       start_time: ['', [Validators.required, this.noPastDateValidator]],
       end_time: ['', [Validators.required, this.noPastDateValidator]],
-      reason: ['', Validators.required]
+      reason: ['', Validators.required],
     });
   }
 
@@ -50,16 +70,20 @@ export class AppointmentFormComponent implements OnChanges {
   }
 
   get patientOptions() {
-    return this.patients.map(p => ({
+    return this.patients.map((p) => ({
       label: p.first_name + ' ' + p.last_name,
-      value: p.id
+      value: p.id,
     }));
   }
 
   noPastDateValidator(control: AbstractControl): ValidationErrors | null {
     const inputDate = new Date(control.value);
     const now = new Date();
-    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const todayStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
 
     if (inputDate < todayStart) {
       return { pastDate: true };

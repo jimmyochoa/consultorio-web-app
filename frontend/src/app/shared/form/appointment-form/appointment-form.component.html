@@ -1,32 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-dropdown
-    formControlName="patient_id"
-    [formControlName]="'patient_id'"
-    label="Paciente"
-    [options]="patientOptions"
-  ></app-dropdown>
+  <app-dropdown formControlName="patient_id" [formControlName]="'patient_id'" label="Paciente"
+    [options]="patientOptions"></app-dropdown>
 
-  <app-form-field
-    formControlName="start_time"
-    [formControlName]="'start_time'"
-    type="datetime-local"
-    label="Fecha y hora de inicio"
-  ></app-form-field>
+  <app-form-field formControlName="start_time" [formControlName]="'start_time'" type="datetime-local"
+    label="Fecha y hora de inicio"></app-form-field>
 
-  <app-form-field
-    formControlName="end_time"
-    [formControlName]="'end_time'"
-    type="datetime-local"
-    label="Fecha y hora de fin"
-  ></app-form-field>
+  <app-form-field formControlName="end_time" [formControlName]="'end_time'" type="datetime-local"
+    label="Fecha y hora de fin"></app-form-field>
 
-  <app-form-field
-    formControlName="reason"
-    [formControlName]="'reason'"
-    label="Razón de cita"
-  ></app-form-field>
+  <app-form-field formControlName="reason" [formControlName]="'reason'" label="Razón de cita"></app-form-field>
 
   <div class="d-grid">
-    <button class="btn btn-primary mt-3" type="submit">Guardar Cita</button>
+    <app-button type="submit" label="Guardar" class="btn-success mt-3"></app-button>
   </div>
 </form>
