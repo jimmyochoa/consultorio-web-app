@@ -1,35 +1,55 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Patient } from '../../interfaces/patient';
+import patientsData from '../../data/patients.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientService {
-  private readonly baseUrl = 'http://localhost:3000';
+  private readonly storageKey = 'patients';
 
-  constructor(private http: HttpClient) { }
+  constructor() {
+    if (!localStorage.getItem(this.storageKey)) {
+      localStorage.setItem(this.storageKey, JSON.stringify(patientsData));
+    }
+  }
 
   getPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.baseUrl}/patients`);
+    const raw = localStorage.getItem(this.storageKey);
+    const patients: Patient[] = raw ? JSON.parse(raw) : patientsData;
+    return of(patients);
   }
 
   createPatient(patient: Patient): Observable<Patient> {
-    return this.http.post<Patient>(`${this.baseUrl}/patients`, patient);
+    const raw = localStorage.getItem(this.storageKey);
+    const patients: Patient[] = raw ? JSON.parse(raw) : [];
+    const newPatient = { ...patient, id: Date.now() };
+    patients.push(newPatient);
+    localStorage.setItem(this.storageKey, JSON.stringify(patients));
+    return of(newPatient);
   }
 
   updatePatient(patient: Patient): Observable<Patient> {
-    return this.http.put<Patient>(`${this.baseUrl}/patients/${patient.id}`, patient);
+    const raw = localStorage.getItem(this.storageKey);
+    let patients: Patient[] = raw ? JSON.parse(raw) : [];
+    patients = patients.map(p => (p.id === patient.id ? patient : p));
+    localStorage.setItem(this.storageKey, JSON.stringify(patients));
+    return of(patient);
   }
-
 
   deletePatient(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/patients/${id}`);
+    const raw = localStorage.getItem(this.storageKey);
+    let patients: Patient[] = raw ? JSON.parse(raw) : [];
+    patients = patients.filter(p => p.id !== id);
+    localStorage.setItem(this.storageKey, JSON.stringify(patients));
+    return of();
   }
 
-  getPatientById(id: number) {
-    return this.http.get<Patient>(`${this.baseUrl}/patients/${id}`);
+  getPatientById(id: number): Observable<Patient> {
+    const raw = localStorage.getItem(this.storageKey);
+    const patients: Patient[] = raw ? JSON.parse(raw) : [];
+    const patient = patients.find(p => p.id === id)!;
+    return of(patient);
   }
-
 }

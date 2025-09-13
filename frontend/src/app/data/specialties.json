@@ -1,0 +1,7 @@
+[
+  { "id": 1, "name": "Medicina General" },
+  { "id": 2, "name": "Cardiología" },
+  { "id": 3, "name": "Pediatría" },
+  { "id": 4, "name": "Dermatología" },
+  { "id": 5, "name": "Neurología" }
+]

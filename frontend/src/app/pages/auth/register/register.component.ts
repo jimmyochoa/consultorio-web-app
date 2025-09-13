@@ -66,12 +66,17 @@ export class RegisterComponent {
       specialty_area_id: Number(specialty_area_id)
     };
 
-    this.authService.register(payload).subscribe(() => {
+    const result = this.authService.register(payload);
+
+    if (result.success) {
       this.errorMessage = '';
       this.successMessage = 'Registro exitoso';
       setTimeout(() => {
         this.router.navigate(['/auth/login']);
       }, 1500);
-    });
+    } else {
+      this.errorMessage = 'Error al registrar';
+      this.successMessage = '';
+    }
   }
 }

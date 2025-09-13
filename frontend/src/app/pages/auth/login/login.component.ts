@@ -25,7 +25,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService
-  ) { }
+  ) {}
 
   onSubmit() {
     if (this.loginForm.invalid) {
@@ -38,19 +38,14 @@ export class LoginComponent {
       password: this.loginForm.get('password')!.value!
     };
 
-    this.authService.login(payload).subscribe({
-      next: (res: any) => {
-        var cachedData = { id: res.id }
+    const result = this.authService.login(payload);
 
-        localStorage.setItem('user', JSON.stringify(cachedData));
-
-        this.errorMessage = '';
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.errorMessage = err.error?.message || 'Credenciales incorrectas';
-      }
-    });
+    if (result.success) {
+      localStorage.setItem('user', JSON.stringify(result.user));
+      this.errorMessage = '';
+      this.router.navigate(['/dashboard']);
+    } else {
+      this.errorMessage = result.message || 'Credenciales incorrectas';
+    }
   }
-
 }

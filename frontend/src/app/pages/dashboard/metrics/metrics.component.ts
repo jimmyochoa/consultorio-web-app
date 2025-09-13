@@ -5,9 +5,10 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-metrics',
+  standalone: true, // 👈 faltaba esto
   imports: [CommonModule],
   templateUrl: './metrics.component.html',
-  styleUrl: './metrics.component.css',
+  styleUrls: ['./metrics.component.css'], // 👈 corregido plural
 })
 export class MetricsComponent {
   metrics: MetricsData | null = null;

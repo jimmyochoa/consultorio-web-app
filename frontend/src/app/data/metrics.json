@@ -1,0 +1,14 @@
+{
+  "doctorName": "Dr. Admin",
+  "specialtyArea": "Medicina General",
+  "totalDoctors": 8,
+  "totalPatients": 2,
+  "doctorsBySpecialty": [
+    { "specialty": "Medicina General", "count": 2 },
+    { "specialty": "Cardiología", "count": 2 },
+    { "specialty": "Pediatría", "count": 3 },
+    { "specialty": "Dermatología", "count": 1 }
+  ],
+  "pastAppointments": 1,
+  "upcomingAppointments": 1
+}

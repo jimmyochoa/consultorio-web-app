@@ -1,37 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Appointment } from '../../interfaces/appointment';
+import appointmentsData from '../../data/appointments.json';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentsService {
-  private readonly baseUrl = 'http://localhost:3000';
+  private readonly storageKey = 'appointments';
 
-  constructor(private http: HttpClient) { }
+  constructor() {
+    if (!localStorage.getItem(this.storageKey)) {
+      localStorage.setItem(this.storageKey, JSON.stringify(appointmentsData));
+    }
+  }
 
   getAppointments(): Observable<Appointment[]> {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    const doctorId = user?.id;
-
-    return this.http.get<Appointment[]>(`${this.baseUrl}/appointments/doctor/${doctorId}`);
+    const raw = localStorage.getItem(this.storageKey);
+    const appointments: Appointment[] = raw ? JSON.parse(raw) : appointmentsData;
+    return of(appointments);
   }
 
   createAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.post<Appointment>(`${this.baseUrl}/appointments`, appointment);
+    const raw = localStorage.getItem(this.storageKey);
+    const appointments: Appointment[] = raw ? JSON.parse(raw) : [];
+    const newAppointment = { ...appointment, id: Date.now() };
+    appointments.push(newAppointment);
+    localStorage.setItem(this.storageKey, JSON.stringify(appointments));
+    return of(newAppointment);
   }
 
   updateAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.put<Appointment>(`${this.baseUrl}/appointments/${appointment.id}`, appointment);
+    const raw = localStorage.getItem(this.storageKey);
+    let appointments: Appointment[] = raw ? JSON.parse(raw) : [];
+    appointments = appointments.map(a => (a.id === appointment.id ? appointment : a));
+    localStorage.setItem(this.storageKey, JSON.stringify(appointments));
+    return of(appointment);
   }
 
   deleteAppointment(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/appointments/${id}`);
+    const raw = localStorage.getItem(this.storageKey);
+    let appointments: Appointment[] = raw ? JSON.parse(raw) : [];
+    appointments = appointments.filter(a => a.id !== id);
+    localStorage.setItem(this.storageKey, JSON.stringify(appointments));
+    return of();
   }
 
-  getAppointmentById(id: number) {
-    return this.http.get<Appointment>(`${this.baseUrl}/appointments/${id}`);
+  getAppointmentById(id: number): Observable<Appointment> {
+    const raw = localStorage.getItem(this.storageKey);
+    const appointments: Appointment[] = raw ? JSON.parse(raw) : [];
+    const appointment = appointments.find(a => a.id === id)!;
+    return of(appointment);
   }
 }

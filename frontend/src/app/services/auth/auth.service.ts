@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Doctor } from '../../interfaces/doctor';
 import { DoctorCreateRequest } from '../../interfaces/requests/DoctorCreateRequest';
 import { DoctorLoginRequest } from '../../interfaces/requests/DoctorLoginRequest';
 
@@ -9,19 +7,24 @@ import { DoctorLoginRequest } from '../../interfaces/requests/DoctorLoginRequest
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
 
-  constructor(
-    private router: Router,
-    private http: HttpClient
-  ) { }
+  constructor(private router: Router) {}
 
   register(data: DoctorCreateRequest) {
-    return this.http.post(`${this.apiUrl}/register`, data);
+    const doctors = JSON.parse(localStorage.getItem('doctors') || '[]');
+    doctors.push({ ...data, id: Date.now() });
+    localStorage.setItem('doctors', JSON.stringify(doctors));
+    return { success: true };
   }
 
   login(data: DoctorLoginRequest) {
-    return this.http.post(`${this.apiUrl}/login`, data);
+    // demo hardcoded login
+    if (data.email === 'admin@example.com' && data.password === 'admin') {
+      const user = { id: 1, name: 'Admin User', email: 'admin' };
+      localStorage.setItem('user', JSON.stringify(user));
+      return { success: true, user };
+    }
+    return { success: false, message: 'Invalid credentials' };
   }
 
   logout() {

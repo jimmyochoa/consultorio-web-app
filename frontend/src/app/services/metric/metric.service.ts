@@ -1,21 +1,29 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MetricsData } from '../../interfaces/metric';
+import metricsData from '../../data/metrics.json';
+import patientsData from '../../data/patients.json';
+import appointmentsData from '../../data/appointments.json';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MetricsService {
-  private readonly baseUrl = 'http://localhost:3000';
-
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   getMetrics(): Observable<MetricsData> {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    // leer pacientes y citas del storage (o json si no existen)
+    const patients = JSON.parse(localStorage.getItem('patients') || JSON.stringify(patientsData));
+    const appointments = JSON.parse(localStorage.getItem('appointments') || JSON.stringify(appointmentsData));
 
-    const doctorId = user?.id;
+    // recalcular métricas dinámicas
+    const updated: MetricsData = {
+      ...metricsData,
+      totalPatients: patients.length,
+      pastAppointments: appointments.filter((a: any) => new Date(a.date) < new Date()).length,
+      upcomingAppointments: appointments.filter((a: any) => new Date(a.date) >= new Date()).length
+    };
 
-    return this.http.get<MetricsData>(`${this.baseUrl}/metrics/${doctorId}`);
+    return of(updated);
   }
 }
